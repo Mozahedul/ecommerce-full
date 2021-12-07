@@ -8,8 +8,8 @@ import Header from './components/nav/Header';
 const App = () => {
   return (
     <>
-      <Header />
       <Router>
+        <Header />
         <Switch>
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
