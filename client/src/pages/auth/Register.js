@@ -5,6 +5,8 @@ import { auth } from '../../firebase';
 
 const Register = () => {
   const [email, setEmail] = useState('');
+  const [notFoundEmail, setNotFoundEmail] = useState('');
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(process.env.REACT_APP_REGISTER_REDIRECT_URL);
@@ -17,12 +19,15 @@ const Register = () => {
     };
 
     // send an email with sign in link
-    await auth.sendSignInLinkToEmail(email, config);
-
-    // After sending the email, show a message in website
-    toast.success(
-      `Email is send to ${email}. Click the link to complete your registration.`,
-    );
+    if (email) {
+      await auth.sendSignInLinkToEmail(email, config);
+      // After sending the email, show a message in website
+      toast.success(
+        `Email is send to ${email}. Click the link to complete your registration.`,
+      );
+    } else {
+      setNotFoundEmail('Please enter your email!');
+    }
 
     // save email in local storage
     window.localStorage.setItem('emailForRegistration', email);
@@ -42,6 +47,7 @@ const Register = () => {
             onChange={(e) => setEmail(e.target.value)}
             autoFocus
           />
+          <p style={{ color: 'red' }}>{notFoundEmail}</p>
           <button
             type="submit"
             className="btn btn-raised"

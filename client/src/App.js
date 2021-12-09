@@ -6,6 +6,7 @@ import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
 import Home from './pages/Home';
 import Header from './components/nav/Header';
+import RegisterComplete from './pages/auth/RegisterComplete';
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
         <Header />
         <ToastContainer />
         <Switch>
+          <Route path="/register/complete" component={RegisterComplete} />
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
           <Route path="/" component={Home} exact />
