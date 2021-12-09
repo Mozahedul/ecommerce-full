@@ -8,11 +8,12 @@ const Register = () => {
   const [email, setEmail] = useState('');
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(process.env.REACT_APP_REGISTER_REDIRECT_URL);
     // When a user click on register button, then a confirmation email with
     // validation link will send.
     // this config object is used to email link authentication
     const config = {
-      url: 'http://localhost:3000/register/complete',
+      url: process.env.REACT_APP_REGISTER_REDIRECT_URL,
       handleCodeInApp: true,
     };
 
