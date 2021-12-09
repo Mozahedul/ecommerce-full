@@ -1,7 +1,6 @@
 import { Col, Row } from 'antd';
 import React, { useState } from 'react';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 import { auth } from '../../firebase';
 
 const Register = () => {
@@ -34,7 +33,6 @@ const Register = () => {
     <Row className="m-t-3">
       <Col span={6} offset={6}>
         <h2>Register</h2>
-        <ToastContainer />
         <form onSubmit={handleSubmit}>
           <input
             type="email"
