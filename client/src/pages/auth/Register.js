@@ -30,7 +30,7 @@ const Register = () => {
     }
 
     // save email in local storage
-    window.localStorage.setItem('emailForRegistration', email);
+    localStorage.setItem('emailForRegistration', email);
     // clear the state
     setEmail('');
   };

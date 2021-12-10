@@ -33,17 +33,11 @@ const Header = () => {
           <Item key="option2">Option 2</Item>
         </Menu.ItemGroup>
       </SubMenu>
-
-      <Item
-        key="register"
-        icon={<UserAddOutlined />}
-        style={{ marginLeft: 'auto' }}
-      >
-        <Link to="/register">Register</Link>
-      </Item>
-
-      <Item key="login" icon={<UserOutlined />}>
+      <Item key="login" icon={<UserOutlined />} style={{ marginLeft: 'auto' }}>
         <Link to="/login">Login</Link>
+      </Item>
+      <Item key="register" icon={<UserAddOutlined />}>
+        <Link to="/register">Register</Link>
       </Item>
     </Menu>
   );
