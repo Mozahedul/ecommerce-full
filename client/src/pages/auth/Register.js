@@ -36,7 +36,7 @@ const Register = () => {
   };
   return (
     <Row className="m-t-3">
-      <Col span={6} offset={6}>
+      <Col span={8} offset={8}>
         <h2>Register</h2>
         <form onSubmit={handleSubmit}>
           <input
