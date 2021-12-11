@@ -27,17 +27,26 @@ const Login = ({ history }) => {
           token: idTokenResult.token,
         },
       });
-      // history.push('/');
+      history.push('/');
     } catch (error) {
       console.error(error);
       toast.error(error.message);
       setLoading(false);
     }
   };
+
+  const googleLogin = (e) => {
+    e.preventDefault();
+    console.log("from  ");
+  };
   return (
     <Row className="m-t-3">
       <Col span={8} offset={8}>
-        <h2>Login</h2>
+        {loading ? (
+          <h4 className="text-success">Loading...</h4>
+        ) : (
+          <h4>Login</h4>
+        )}
         <form onSubmit={handleSubmit}>
           <input
             type="email"
@@ -66,6 +75,19 @@ const Login = ({ history }) => {
             disabled={!email || password.length < 6}
           >
             Login with email/password
+          </Button>
+
+          <Button
+            onClick={googleLogin}
+            type="danger"
+            style={{ marginTop: '15px' }}
+            shape="round"
+            icon={<MailOutlined />}
+            block
+            size="large"
+            disabled={!email || password.length < 6}
+          >
+            Login with Google
           </Button>
         </form>
       </Col>
