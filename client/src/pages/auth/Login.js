@@ -1,15 +1,38 @@
 import React, { useState } from 'react';
 import { Button, Col, Row } from 'antd';
 import { MailOutlined } from '@ant-design/icons';
+import { auth } from '../../firebase';
+import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
 
-const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+const Login = ({ history }) => {
+  const dispatch = useDispatch();
+  const [email, setEmail] = useState('mozahed001@gmail.com');
+  const [password, setPassword] = useState('mozahed525');
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // TODO code here
-    console.table(email, password);
+    setLoading(true);
+    try {
+      const result = await auth.signInWithEmailAndPassword(email, password);
+
+      const { user } = result;
+      const idTokenResult = await user.getIdTokenResult();
+
+      dispatch({
+        type: 'LOGGED_IN_USER',
+        payload: {
+          email: user.email,
+          token: idTokenResult.token,
+        },
+      });
+      // history.push('/');
+    } catch (error) {
+      console.error(error);
+      toast.error(error.message);
+      setLoading(false);
+    }
   };
   return (
     <Row className="m-t-3">
