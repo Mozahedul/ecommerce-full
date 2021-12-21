@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Col, Row } from 'antd';
-import { MailOutlined } from '@ant-design/icons';
-import { auth } from '../../firebase';
+import { GoogleOutlined, MailOutlined } from '@ant-design/icons';
+import { auth, googleAuthProvider } from '../../firebase';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 
@@ -18,7 +18,10 @@ const Login = ({ history }) => {
       const result = await auth.signInWithEmailAndPassword(email, password);
 
       const { user } = result;
+      // getIdTokenResult() is a method used to get access to
+      // the backend after validating the id token
       const idTokenResult = await user.getIdTokenResult();
+      console.log(idTokenResult);
 
       dispatch({
         type: 'LOGGED_IN_USER',
@@ -35,9 +38,26 @@ const Login = ({ history }) => {
     }
   };
 
-  const googleLogin = (e) => {
+  const googleLogin = async (e) => {
     e.preventDefault();
-    console.log("from  ");
+    auth
+      .signInWithPopup(googleAuthProvider)
+      .then(async (result) => {
+        const { user } = result;
+        const idTokenResult = await user.getIdTokenResult();
+        dispatch({
+          type: 'LOGGED_IN_USER',
+          payload: {
+            email: user.email,
+            token: idTokenResult,
+          },
+        });
+        history.push('/');
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error(err.message)
+      });
   };
   return (
     <Row className="m-t-3">
@@ -82,10 +102,9 @@ const Login = ({ history }) => {
             type="danger"
             style={{ marginTop: '15px' }}
             shape="round"
-            icon={<MailOutlined />}
+            icon={<GoogleOutlined />}
             block
             size="large"
-            disabled={!email || password.length < 6}
           >
             Login with Google
           </Button>

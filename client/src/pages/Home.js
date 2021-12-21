@@ -1,10 +1,13 @@
 import React from 'react';
+import { Col, Row } from 'antd';
 
 const Home = () => {
   return (
-    <div>
-      <p>Home page</p>
-    </div>
+    <Row>
+      <Col span={22} offset={1}>
+        <h3 className="m-t-2">Home Page</h3>
+      </Col>
+    </Row>
   );
 };
 
