@@ -1,14 +1,22 @@
 import { Col, Row } from 'antd';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { auth } from '../../firebase';
 
-const Register = () => {
+const Register = ({ history }) => {
   const [email, setEmail] = useState('');
   const [notFoundEmail, setNotFoundEmail] = useState('');
 
+  const { user } = useSelector((state) => ({ ...state }));
+
+  useEffect(() => {
+    if (user && user.token) history.push('/');
+  }, [history, user]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     console.log(process.env.REACT_APP_REGISTER_REDIRECT_URL);
     // When a user click on register button, then a confirmation email with
     // validation link will send.

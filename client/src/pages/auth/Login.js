@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Col, Row } from 'antd';
 import { GoogleOutlined, MailOutlined } from '@ant-design/icons';
 import { auth, googleAuthProvider } from '../../firebase';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 
@@ -11,6 +11,12 @@ const Login = ({ history }) => {
   const [email, setEmail] = useState('mozahed001@gmail.com');
   const [password, setPassword] = useState('mozahed525');
   const [loading, setLoading] = useState(false);
+
+  const { user } = useSelector((state) => ({ ...state }));
+
+  useEffect(() => {
+    if (user && user.token) history.push('/');
+  }, [user, history]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -66,56 +72,58 @@ const Login = ({ history }) => {
         {loading ? (
           <h4 className="text-success">Loading...</h4>
         ) : (
-          <h4>Login</h4>
-        )}
-        <form onSubmit={handleSubmit}>
-          <input
-            type="email"
-            className="form-control"
-            placeholder="Your email address"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            autoFocus
-          />
-          <input
-            style={{ marginTop: '12px' }}
-            type="password"
-            className="form-control"
-            placeholder="Your password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <Link
-            to="/forgot/password"
-            style={{ float: 'right', marginTop: '10px' }}
-          >
-            Forgot password?
-          </Link>
-          <Button
-            onClick={handleSubmit}
-            type="primary"
-            style={{ marginTop: '15px' }}
-            shape="round"
-            icon={<MailOutlined />}
-            block
-            size="large"
-            disabled={!email || password.length < 6}
-          >
-            Login with email/password
-          </Button>
+          <>
+            <h4>Login</h4>
+            <form onSubmit={handleSubmit}>
+              <input
+                type="email"
+                className="form-control"
+                placeholder="Your email address"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                autoFocus
+              />
+              <input
+                style={{ marginTop: '12px' }}
+                type="password"
+                className="form-control"
+                placeholder="Your password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <Link
+                to="/forgot/password"
+                style={{ float: 'right', marginTop: '10px' }}
+              >
+                Forgot password?
+              </Link>
+              <Button
+                onClick={handleSubmit}
+                type="primary"
+                style={{ marginTop: '15px' }}
+                shape="round"
+                icon={<MailOutlined />}
+                block
+                size="large"
+                disabled={!email || password.length < 6}
+              >
+                Login with email/password
+              </Button>
 
-          <Button
-            onClick={googleLogin}
-            type="danger"
-            style={{ marginTop: '15px' }}
-            shape="round"
-            icon={<GoogleOutlined />}
-            block
-            size="large"
-          >
-            Login with Google
-          </Button>
-        </form>
+              <Button
+                onClick={googleLogin}
+                type="danger"
+                style={{ marginTop: '15px' }}
+                shape="round"
+                icon={<GoogleOutlined />}
+                block
+                size="large"
+              >
+                Login with Google
+              </Button>
+            </form>
+          </>
+        )}
       </Col>
     </Row>
   );

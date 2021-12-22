@@ -40,6 +40,7 @@ const Header = () => {
       selectedKeys={[current]}
       mode="horizontal"
       style={{ width: '100%' }}
+      key="menu"
     >
       <Item key="home" icon={<AppstoreOutlined />}>
         <Link to="/"> Home </Link>
@@ -49,13 +50,11 @@ const Header = () => {
         <Menu.ItemGroup>
           <Item key="option1">Option 1</Item>
           <Item key="option2">Option 2</Item>
-          <Item icon={<LogoutOutlined />} onClick={logout}>
+          <Item key="option3" icon={<LogoutOutlined />} onClick={logout}>
             Logout
           </Item>
         </Menu.ItemGroup>
       </SubMenu>
-
-     
 
       <Item key="login" icon={<UserOutlined />} style={{ marginLeft: 'auto' }}>
         <Link to="/login">Login</Link>
