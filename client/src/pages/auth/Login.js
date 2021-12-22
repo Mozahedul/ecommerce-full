@@ -4,6 +4,7 @@ import { GoogleOutlined, MailOutlined } from '@ant-design/icons';
 import { auth, googleAuthProvider } from '../../firebase';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
 
 const Login = ({ history }) => {
   const dispatch = useDispatch();
@@ -56,7 +57,7 @@ const Login = ({ history }) => {
       })
       .catch((err) => {
         console.log(err);
-        toast.error(err.message)
+        toast.error(err.message);
       });
   };
   return (
@@ -84,6 +85,12 @@ const Login = ({ history }) => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+          <Link
+            to="/forgot/password"
+            style={{ float: 'right', marginTop: '10px' }}
+          >
+            Forgot password?
+          </Link>
           <Button
             onClick={handleSubmit}
             type="primary"

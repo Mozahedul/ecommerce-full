@@ -9,6 +9,7 @@ import Home from './pages/Home';
 import Header from './components/nav/Header';
 import RegisterComplete from './pages/auth/RegisterComplete';
 import { auth } from './firebase';
+import ForgotPassword from './pages/auth/ForgotPassword';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -41,6 +42,7 @@ const App = () => {
         <Header />
         <ToastContainer />
         <Switch>
+          <Route path="/forgot/password" component={ForgotPassword} />
           <Route path="/register/complete" component={RegisterComplete} />
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />

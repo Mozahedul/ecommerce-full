@@ -10,14 +10,17 @@ import {
 
 import { Link } from 'react-router-dom';
 import firebase from 'firebase/compat/app';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 const { SubMenu, Item } = Menu;
 
 const Header = () => {
   const dispatch = useDispatch();
+  const { user } = useSelector((state) => state);
   const history = useHistory();
   const [current, setCurrent] = useState('home');
+
+  console.log('From user:', JSON.stringify(user && user.email));
 
   const handleClick = (e) => {
     setCurrent(e.key);
@@ -39,7 +42,7 @@ const Header = () => {
       style={{ width: '100%' }}
     >
       <Item key="home" icon={<AppstoreOutlined />}>
-        <Link to="/"> Home</Link>
+        <Link to="/"> Home </Link>
       </Item>
 
       <SubMenu key="SubMenu" icon={<SettingOutlined />} title="Username">
@@ -51,6 +54,9 @@ const Header = () => {
           </Item>
         </Menu.ItemGroup>
       </SubMenu>
+
+     
+
       <Item key="login" icon={<UserOutlined />} style={{ marginLeft: 'auto' }}>
         <Link to="/login">Login</Link>
       </Item>
