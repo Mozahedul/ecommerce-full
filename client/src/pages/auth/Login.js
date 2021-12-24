@@ -5,6 +5,19 @@ import { auth, googleAuthProvider } from '../../firebase';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+
+const createOrUpdateUser = async (authtoken) => {
+  return await axios.post(
+    `${process.env.REACT_APP_API}/create-or-update-user`,
+    {},
+    {
+      headers: {
+        authtoken,
+      },
+    },
+  );
+};
 
 const Login = ({ history }) => {
   const dispatch = useDispatch();
@@ -28,7 +41,10 @@ const Login = ({ history }) => {
       // getIdTokenResult() is a method used to get access to
       // the backend after validating the id token
       const idTokenResult = await user.getIdTokenResult();
-      console.log(idTokenResult);
+
+      createOrUpdateUser(idTokenResult.token)
+        .then((res) => console.log('CREATE OR UPDATE RES', res))
+        .catch();
 
       dispatch({
         type: 'LOGGED_IN_USER',
