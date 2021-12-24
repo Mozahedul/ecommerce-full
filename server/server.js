@@ -3,8 +3,9 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
+const fs = require('fs');
 const dotenv = require('dotenv');
-const authRouter = require('./routes/auth');
+// const authRouter = require('./routes/auth');
 
 // configure dotenv
 dotenv.config();
@@ -27,7 +28,9 @@ app.use(bodyParser.json({ limit: '2mb' }));
 app.use(cors());
 
 // Routes
-app.use('/api', authRouter);
+fs.readdirSync('./routes').map((r) =>
+  app.use('/api', require('./routes/' + r)),
+);
 
 // Listen the server
 const PORT = process.env.PORT || 8000;
