@@ -4,6 +4,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const dotenv = require('dotenv');
+const authRouter = require('./routes/auth');
 
 // configure dotenv
 dotenv.config();
@@ -26,9 +27,7 @@ app.use(bodyParser.json({ limit: '2mb' }));
 app.use(cors());
 
 // Routes
-app.get('/', (req, res) => {
-  res.send('Hello world!');
-});
+app.use('/api', authRouter);
 
 // Listen the server
 const PORT = process.env.PORT || 8000;
