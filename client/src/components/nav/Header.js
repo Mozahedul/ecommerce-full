@@ -46,22 +46,35 @@ const Header = () => {
         <Link to="/"> Home </Link>
       </Item>
 
-      <SubMenu key="SubMenu" icon={<SettingOutlined />} title="Username">
-        <Menu.ItemGroup>
-          <Item key="option1">Option 1</Item>
-          <Item key="option2">Option 2</Item>
-          <Item key="option3" icon={<LogoutOutlined />} onClick={logout}>
-            Logout
+      {user ? (
+        <SubMenu
+          key="SubMenu"
+          icon={<SettingOutlined />}
+          title={user.name}
+          style={{ marginLeft: 'auto' }}
+        >
+          <Menu.ItemGroup>
+            <Item key="option1">Option 1</Item>
+            <Item key="option2">Option 2</Item>
+            <Item key="option3" icon={<LogoutOutlined />} onClick={logout}>
+              Logout
+            </Item>
+          </Menu.ItemGroup>
+        </SubMenu>
+      ) : (
+        <>
+          <Item
+            key="login"
+            icon={<UserOutlined />}
+            style={{ marginLeft: 'auto' }}
+          >
+            <Link to="/login">Login</Link>
           </Item>
-        </Menu.ItemGroup>
-      </SubMenu>
-
-      <Item key="login" icon={<UserOutlined />} style={{ marginLeft: 'auto' }}>
-        <Link to="/login">Login</Link>
-      </Item>
-      <Item key="register" icon={<UserAddOutlined />}>
-        <Link to="/register">Register</Link>
-      </Item>
+          <Item key="register" icon={<UserAddOutlined />}>
+            <Link to="/register">Register</Link>
+          </Item>
+        </>
+      )}
     </Menu>
   );
 };
