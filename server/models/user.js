@@ -3,7 +3,9 @@ const { objectId } = mongoose.Schema;
 
 const userSchema = new mongoose.Schema(
   {
-    name: String,
+    name: {
+      type: String,
+    },
     email: {
       type: String,
       required: true,
@@ -16,13 +18,13 @@ const userSchema = new mongoose.Schema(
     },
     cart: {
       type: String,
-      default: [],
+      // default: [],
     },
     address: String,
-    wishlist: {
-      type: objectId,
-      ref: 'Product',
-    },
+    // wishlist: {
+    //   type: objectId,
+    //   ref: 'Product',
+    // },
   },
   { timestamps: true },
 );
