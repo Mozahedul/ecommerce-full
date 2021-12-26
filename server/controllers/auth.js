@@ -23,4 +23,9 @@ exports.createOrUpdateUser = async (req, res) => {
   }
 };
 
-// module.exports = createOrUpdateUser;
+exports.currentUser = (req, res) => {
+  User.findOne({ email: req.user.email }).exec((err, user) => {
+    if (err) throw new Error(err);
+    res.json(user);
+  });
+};
