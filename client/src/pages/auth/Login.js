@@ -20,11 +20,13 @@ const Login = ({ history }) => {
   }, [user, history]);
 
   const roleBasedDirect = (res) => {
+    // if (user) {
     if (res.data.role === 'admin') {
       history.push('/admin/dashboard');
     } else {
       history.push('/user/history');
     }
+    // }
   };
 
   const handleSubmit = async (e) => {

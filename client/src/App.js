@@ -11,6 +11,8 @@ import RegisterComplete from './pages/auth/RegisterComplete';
 import { auth } from './firebase';
 import ForgotPassword from './pages/auth/ForgotPassword';
 import { currentUser } from './functions/auth';
+import History from './pages/user/History';
+import UserRoute from './components/routes/UserRoute';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -52,11 +54,12 @@ const App = () => {
         <Header />
         <ToastContainer />
         <Switch>
-          <Route path="/forgot/password" component={ForgotPassword} />
-          <Route path="/register/complete" component={RegisterComplete} />
-          <Route path="/login" component={Login} />
-          <Route path="/register" component={Register} />
-          <Route path="/" component={Home} exact />
+          <UserRoute exact path="/user/history" component={History} />
+          <Route exact path="/forgot/password" component={ForgotPassword} />
+          <Route exact path="/register/complete" component={RegisterComplete} />
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/register" component={Register} />
+          <Route exact path="/" component={Home} />
         </Switch>
       </Router>
     </>
