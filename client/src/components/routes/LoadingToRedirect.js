@@ -1,5 +1,4 @@
-import { Col, Row } from 'antd';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 const LoadingToRedirect = () => {
@@ -8,7 +7,7 @@ const LoadingToRedirect = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCount((currentCount) => --currentCount);
+      setCount(currentCount => --currentCount);
     }, 1000);
     count === 0 && history.push('/');
     return () => clearInterval(interval);
