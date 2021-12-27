@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+
 const { objectId } = mongoose.Schema;
 
 const userSchema = new mongoose.Schema(
@@ -26,7 +27,7 @@ const userSchema = new mongoose.Schema(
     //   ref: 'Product',
     // },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 module.exports = mongoose.model('User', userSchema);

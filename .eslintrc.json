@@ -48,6 +48,8 @@
     "node/prefer-promises/dns": "error",
     "node/prefer-promises/fs": "error",
     "no-path-concat": "off",
-    "import/extensions": "off"
+    "import/extensions": "off",
+    "import/no-commonjs": "off",
+    "prettier/prettier": "off"
   }
 }
