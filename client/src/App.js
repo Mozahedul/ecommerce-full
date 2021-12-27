@@ -13,6 +13,8 @@ import ForgotPassword from './pages/auth/ForgotPassword';
 import { currentUser } from './functions/auth';
 import History from './pages/user/History';
 import UserRoute from './components/routes/UserRoute';
+import Password from './pages/user/Password';
+import Wishlist from './pages/user/Wishlist';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -20,14 +22,14 @@ const App = () => {
   useEffect(() => {
     // with onAuthStateChanged() method, we can subscribe users to
     // current authentication state
-    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+    const unsubscribe = auth.onAuthStateChanged(async user => {
       if (user) {
         // getIdTokenResult() is a method can be be used
         // to access the protected routes from backend
         const idTokenResult = await user.getIdTokenResult();
         console.log('User', user);
         currentUser(idTokenResult.token)
-          .then((res) => {
+          .then(res => {
             dispatch({
               type: 'LOGGED_IN_USER',
               payload: {
@@ -39,7 +41,7 @@ const App = () => {
               },
             });
           })
-          .catch((error) => {
+          .catch(error => {
             console.log(error);
           });
       }
@@ -54,6 +56,8 @@ const App = () => {
         <Header />
         <ToastContainer />
         <Switch>
+          <UserRoute exact path="/user/password" component={Password} />
+          <UserRoute exact path="/user/wishlist" component={Wishlist} />
           <UserRoute exact path="/user/history" component={History} />
           <Route exact path="/forgot/password" component={ForgotPassword} />
           <Route exact path="/register/complete" component={RegisterComplete} />
