@@ -17,6 +17,7 @@ import Password from './pages/user/Password';
 import Wishlist from './pages/user/Wishlist';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminRoute from './components/routes/AdminRoute';
+import CategoryCreate from './pages/admin/category/CategoryCreate';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -58,6 +59,7 @@ const App = () => {
         <Header />
         <ToastContainer />
         <Switch>
+          <AdminRoute exact path="/admin/category" component={CategoryCreate} />
           <AdminRoute
             exact
             path="/admin/dashboard"

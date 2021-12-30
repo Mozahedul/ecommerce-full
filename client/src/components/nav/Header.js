@@ -16,17 +16,17 @@ const { SubMenu, Item } = Menu;
 
 const Header = () => {
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state);
+  const { user } = useSelector(state => state);
   const history = useHistory();
   const [current, setCurrent] = useState('home');
 
   console.log('From user:', JSON.stringify(user && user.email));
 
-  const handleClick = (e) => {
+  const handleClick = e => {
     setCurrent(e.key);
   };
 
-  const logout = (e) => {
+  const logout = e => {
     firebase.auth().signOut();
     dispatch({
       type: 'LOGOUT',
@@ -54,8 +54,18 @@ const Header = () => {
           style={{ marginLeft: 'auto' }}
         >
           <Menu.ItemGroup>
-            <Item key="option1">Option 1</Item>
-            <Item key="option2">Option 2</Item>
+            {user && user.role === 'subscriber' && (
+              <Item>
+                <Link to="/user/history">Dashboard</Link>
+              </Item>
+            )}
+
+            {user && user.role === 'admin' && (
+              <Item>
+                <Link to="/admin/dashboard">Dashboard</Link>
+              </Item>
+            )}
+
             <Item key="option3" icon={<LogoutOutlined />} onClick={logout}>
               Logout
             </Item>
