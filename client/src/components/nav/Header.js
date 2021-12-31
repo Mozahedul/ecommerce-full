@@ -55,18 +55,18 @@ const Header = () => {
         >
           <Menu.ItemGroup>
             {user && user.role === 'subscriber' && (
-              <Item>
+              <Item key="userHistory">
                 <Link to="/user/history">Dashboard</Link>
               </Item>
             )}
 
             {user && user.role === 'admin' && (
-              <Item>
+              <Item key="dashboard">
                 <Link to="/admin/dashboard">Dashboard</Link>
               </Item>
             )}
 
-            <Item key="option3" icon={<LogoutOutlined />} onClick={logout}>
+            <Item key="logout" icon={<LogoutOutlined />} onClick={logout}>
               Logout
             </Item>
           </Menu.ItemGroup>
