@@ -16,6 +16,8 @@ const CategoryCreate = () => {
   const [name, setName] = useState('');
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState([]);
+  // Step 1
+  const [keyword, setKeyword] = useState('');
 
   console.log(categories);
 
@@ -61,6 +63,16 @@ const CategoryCreate = () => {
     }
   };
 
+  // Step 3
+  const handleSearchChange = e => {
+    e.preventDefault();
+    setKeyword(e.target.value.toLowerCase());
+  };
+
+  // Step 4
+  // Here includes check the keyword; if exists, then returns true
+  const searched = keyword => c => c.name.toLowerCase().includes(keyword);
+
   return (
     <>
       <div className="container-fluid" style={{ marginTop: '20px' }}>
@@ -79,8 +91,20 @@ const CategoryCreate = () => {
               setName={setName}
               name={name}
             />
+
+            {/* Step 2 */}
+            <input
+              type="search"
+              placeholder="Filter"
+              value={keyword}
+              onChange={handleSearchChange}
+              className="form-control"
+              style={{ marginBottom: '1.5rem' }}
+            />
             <hr />
-            {categories.map(c => (
+
+            {/* Step 5 - include searched function before the map */}
+            {categories.filter(searched(keyword)).map(c => (
               <div
                 className="alert alert-secondary row"
                 role="alert"
