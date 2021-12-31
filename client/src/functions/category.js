@@ -17,13 +17,12 @@ export const removeCategory = async (slug, authtoken) =>
   });
 
 // Update a category
-export const updateCategory = async (slug, category, authtoken) => {
+export const updateCategory = async (slug, category, authtoken) =>
   await axios.put(`${process.env.REACT_APP_API}/category/${slug}`, category, {
     headers: {
       authtoken,
     },
   });
-};
 
 // Create a category
 export const createCategory = async (category, authtoken) =>
