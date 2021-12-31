@@ -9,6 +9,7 @@ import {
 } from '../../../functions/category';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
+import CategoryForms from '../../../components/forms/CategoryForms';
 
 const CategoryCreate = () => {
   const { user } = useSelector(state => ({ ...state }));
@@ -60,28 +61,6 @@ const CategoryCreate = () => {
     }
   };
 
-  const categoryForm = () => (
-    <form onSubmit={handleSubmit}>
-      <div className="form-group">
-        <input
-          className="form-control"
-          type="text"
-          placeholder="Enter category name"
-          value={name}
-          onChange={e => setName(e.target.value)}
-          autoFocus
-          required
-        />
-        <button
-          type="submit"
-          className="btn btn-outline-primary"
-          style={{ marginTop: '20px' }}
-        >
-          Save
-        </button>
-      </div>
-    </form>
-  );
   return (
     <>
       <div className="container-fluid" style={{ marginTop: '20px' }}>
@@ -95,7 +74,11 @@ const CategoryCreate = () => {
             ) : (
               <h4>Create category</h4>
             )}
-            {categoryForm()}
+            <CategoryForms
+              handleSubmit={handleSubmit}
+              setName={setName}
+              name={name}
+            />
             <hr />
             {categories.map(c => (
               <div
