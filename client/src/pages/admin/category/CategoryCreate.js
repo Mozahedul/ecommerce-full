@@ -10,6 +10,7 @@ import {
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import CategoryForms from '../../../components/forms/CategoryForms';
+import LocalSearch from '../../../components/forms/LocalSearch';
 
 const CategoryCreate = () => {
   const { user } = useSelector(state => ({ ...state }));
@@ -63,12 +64,6 @@ const CategoryCreate = () => {
     }
   };
 
-  // Step 3
-  const handleSearchChange = e => {
-    e.preventDefault();
-    setKeyword(e.target.value.toLowerCase());
-  };
-
   // Step 4
   // Here includes check the keyword; if exists, then returns true
   const searched = keyword => c => c.name.toLowerCase().includes(keyword);
@@ -93,17 +88,11 @@ const CategoryCreate = () => {
             />
 
             {/* Step 2 */}
-            <input
-              type="search"
-              placeholder="Filter"
-              value={keyword}
-              onChange={handleSearchChange}
-              className="form-control"
-              style={{ marginBottom: '1.5rem' }}
-            />
-            <hr />
+            <LocalSearch keyword={keyword} setKeyword={setKeyword} />
 
-            {/* Step 5 - include searched function before the map */}
+            {/* Step 5 - include searched function before the map.
+            Here, filter() is a higher order function, will take a callback function. We put the callback function inside the higher order function of searched function.
+            */}
             {categories.filter(searched(keyword)).map(c => (
               <div
                 className="alert alert-secondary row"
