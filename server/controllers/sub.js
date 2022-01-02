@@ -5,8 +5,8 @@ const Sub = require('../models/sub');
 // Save a category in the database
 module.exports.create = async (req, res) => {
   try {
-    const { name } = req.body;
-    const subcategory = await new Sub({ name, slug: slugify(name) }).save();
+    const { name, parent } = req.body;
+    const subcategory = await new Sub({ name, parent, slug: slugify(name) }).save();
     res.status(200).json(subcategory);
   } catch (error) {
     console.log(error);

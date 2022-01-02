@@ -19,6 +19,7 @@ import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminRoute from './components/routes/AdminRoute';
 import CategoryCreate from './pages/admin/category/CategoryCreate';
 import CategoryUpdate from './pages/admin/category/CategoryUpdate';
+import SubCreate from './pages/admin/sub/SubCreate';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -60,7 +61,12 @@ const App = () => {
         <Header />
         <ToastContainer />
         <Switch>
-          <AdminRoute exact path="/admin/category/:slug" component={CategoryUpdate}/>
+          <AdminRoute exact path="/admin/sub" component={SubCreate} />
+          <AdminRoute
+            exact
+            path="/admin/category/:slug"
+            component={CategoryUpdate}
+          />
           <AdminRoute exact path="/admin/category" component={CategoryCreate} />
           <AdminRoute
             exact
