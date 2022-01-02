@@ -7,7 +7,7 @@ import CategoryForms from '../../../components/forms/CategoryForms';
 import LocalSearch from '../../../components/forms/LocalSearch';
 import AdminNav from '../../../components/nav/AdminNav';
 import { getCategories } from '../../../functions/category';
-import { createSub, getSub, removeSub, getSubs } from '../../../functions/sub';
+import { createSub, removeSub, getSubs } from '../../../functions/sub';
 
 const SubCreate = () => {
   const { user } = useSelector(state => ({ ...state }));
@@ -15,7 +15,7 @@ const SubCreate = () => {
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState([]);
   const [category, setCategory] = useState('');
-  const [subs, setSubs] = useState('');
+  const [subs, setSubs] = useState([]);
   // Step 1
   const [keyword, setKeyword] = useState('');
 

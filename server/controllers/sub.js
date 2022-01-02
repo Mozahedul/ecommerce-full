@@ -6,7 +6,11 @@ const Sub = require('../models/sub');
 module.exports.create = async (req, res) => {
   try {
     const { name, parent } = req.body;
-    const subcategory = await new Sub({ name, parent, slug: slugify(name) }).save();
+    const subcategory = await new Sub({
+      name,
+      parent,
+      slug: slugify(name),
+    }).save();
     res.status(200).json(subcategory);
   } catch (error) {
     console.log(error);
@@ -26,13 +30,13 @@ module.exports.read = async (req, res) => {
   res.json(subcategory);
 };
 
-// Delete a category
+// Update a category
 module.exports.update = async (req, res) => {
   try {
-    const { name } = req.body;
+    const { name, parent } = req.body;
     const subcategory = await Sub.findOneAndUpdate(
       { slug: req.params.slug },
-      { name, slug: slugify(name) },
+      { name, parent, slug: slugify(name) },
       { new: true }
     );
     res.json(subcategory);
@@ -42,6 +46,7 @@ module.exports.update = async (req, res) => {
   }
 };
 
+// Delete a category
 module.exports.remove = async (req, res) => {
   try {
     const deleted = await Sub.findOneAndDelete({
