@@ -7,7 +7,7 @@ import CategoryForms from '../../../components/forms/CategoryForms';
 import LocalSearch from '../../../components/forms/LocalSearch';
 import AdminNav from '../../../components/nav/AdminNav';
 import { getCategories } from '../../../functions/category';
-import { createSub, getSub, removeSub } from '../../../functions/sub';
+import { createSub, getSub, removeSub, getSubs } from '../../../functions/sub';
 
 const SubCreate = () => {
   const { user } = useSelector(state => ({ ...state }));
@@ -15,6 +15,7 @@ const SubCreate = () => {
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState([]);
   const [category, setCategory] = useState('');
+  const [subs, setSubs] = useState('');
   // Step 1
   const [keyword, setKeyword] = useState('');
 
@@ -22,9 +23,11 @@ const SubCreate = () => {
 
   useEffect(() => {
     loadCategories();
+    loadSubs();
   }, []);
 
   const loadCategories = () => getCategories().then(c => setCategories(c.data));
+  const loadSubs = () => getSubs().then(s => setSubs(s.data));
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -36,6 +39,7 @@ const SubCreate = () => {
         setLoading(false);
         setName('');
         toast.success(`The Sub Category "${res.data.name}" has been created`);
+        loadSubs();
       })
       .catch(err => {
         console.log(err);
@@ -51,7 +55,8 @@ const SubCreate = () => {
       removeSub(slug, user.token)
         .then(res => {
           setLoading(false);
-          toast.success(`The category "${res.data.name}" deleted`);
+          toast.success(`The Sub category "${res.data.name}" deleted`);
+          loadSubs();
         })
         .catch(err => {
           setLoading(false);
@@ -109,24 +114,24 @@ const SubCreate = () => {
             {/* Step 5 - include searched function before the map.
             Here, filter() is a higher order function, will take a callback function. We put the callback function inside the higher order function of searched function.
             */}
-            {/* {categories.filter(searched(keyword)).map(c => (
+            {subs.filter(searched(keyword)).map(s => (
               <div
                 className="alert alert-secondary row"
                 role="alert"
-                key={c._id}
+                key={s._id}
               >
-                <span className="col-md">{c.name}</span>
+                <span className="col-md">{s.name}</span>
                 <span className="col-md" style={{ textAlign: 'right' }}>
                   <span
                     className="btn btn-sm btn-info"
                     title="Delete Category"
-                    onClick={() => handleRemove(c.slug)}
+                    onClick={() => handleRemove(s.slug)}
                   >
                     <DeleteOutlined className="text-danger" />
                   </span>
 
                   <Link
-                    to={`/admin/category/${c.slug}`}
+                    to={`/admin/sub/${s.slug}`}
                     className="btn btn-sm"
                     title="Edit Category"
                   >
@@ -136,7 +141,7 @@ const SubCreate = () => {
                   </Link>
                 </span>
               </div>
-            ))} */}
+            ))}
           </div>
         </div>
       </div>
