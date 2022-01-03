@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import AdminNav from '../../components/nav/AdminNav';
 import { createProduct } from '../../functions/product';
+import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 
 const initialState = {
   title: '',
@@ -19,6 +21,7 @@ const initialState = {
 };
 const ProductCreate = () => {
   const [values, setValues] = useState(initialState);
+  const { user } = useSelector(state => ({ ...state }));
   const {
     title,
     description,
@@ -36,10 +39,19 @@ const ProductCreate = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
+    createProduct(values, user.token)
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => {
+        console.log(err);
+        if (err.response.status === 400) toast.error(err.response.data);
+      });
   };
 
   const handleChange = e => {
-    // TODO user input data will be handled here
+    setValues({ ...values, [e.target.name]: e.target.value });
+    console.log(e.target.name, '===> ', e.target.value);
   };
 
   return (
@@ -51,6 +63,7 @@ const ProductCreate = () => {
         <div className="col-md-10">
           <h4>Product category</h4>
           <hr />
+          {JSON.stringify(values)}
           <form onSubmit={handleSubmit}>
             <div className="form-group">
               <label>Title</label>
