@@ -15,3 +15,9 @@ module.exports.create = async (req, res) => {
     });
   }
 };
+
+// populate() method is used to get reference document in other collection
+module.exports.read = async (req, res) => {
+  const products = await Product.find({});
+  res.json(products);
+};

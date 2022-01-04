@@ -1,0 +1,15 @@
+get {{hostname}}/category/latvia
+ 
+###
+
+POST {{hostname}}/category HTTP/1.1
+Content-Type: application/json
+authtoken: {{authtoken}}
+
+{
+  "name": "sony latest"
+}
+
+###
+
+get {{hostname}}/products

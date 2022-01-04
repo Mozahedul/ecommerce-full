@@ -1,4 +1,10 @@
 {
-  "editor.fontSize": 12,
-  "editor.lineHeight": 1.5
+  "rest-client.environmentVariables": {
+    "$shared": {
+      "authtoken": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjFkMmE2YTZhNDcyYWNhNjNmM2FmNzU2NjIxZjM0Njg2OTI1YjUxYTgiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vZWNvbW1lcmNlLTQ0OGQ3IiwiYXVkIjoiZWNvbW1lcmNlLTQ0OGQ3IiwiYXV0aF90aW1lIjoxNjQxMjIwODAxLCJ1c2VyX2lkIjoieldkRHgxVG93U1pnSkZyamk3QlRQZVFmMXR5MSIsInN1YiI6InpXZER4MVRvd1NaZ0pGcmppN0JUUGVRZjF0eTEiLCJpYXQiOjE2NDEyODI5NDIsImV4cCI6MTY0MTI4NjU0MiwiZW1haWwiOiJtb3phaGVkMDAxQGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7ImVtYWlsIjpbIm1vemFoZWQwMDFAZ21haWwuY29tIl19LCJzaWduX2luX3Byb3ZpZGVyIjoicGFzc3dvcmQifX0.d87YunHqUFGyPWqlurDsNHIwQ5h93g4_76O2bc1luT2y2FujrFbI4TfD8k4yZgsSVU_RosTxOP08jrgeOmRHOFqv3630Aiqp6XSmvi-GrTOgBoZvX9te0ojJaXLA_ojUjMXqaNcQFoeVxMfVyzjZIeckkucAsxYGedDyp-KoLLuDVqmKlwar6DO060g_qTK8wdIT9Ot0ZUHE-JuB2FWO06mChiP0DvZOedZHCOrlwR2Af6-J7-FxOe2gb027uBP6uGAlnnaHKnv8bEInzBryNRm883eI_iu2ShnXDxr0BXfB5Ra8FXMetcxECa91Ha5GioWCLZ1ubPajfMKhUSKpwg"
+    },
+    "Local Env": {
+      "hostname": "http://localhost:8000/api"
+    }
+  }
 }
