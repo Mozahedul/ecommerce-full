@@ -19,7 +19,7 @@ const initialState = {
   color: '',
   brand: '',
 };
-const ProductCreate = () => {
+const ProductCreate = ({ history }) => {
   const [values, setValues] = useState(initialState);
   const { user } = useSelector(state => ({ ...state }));
   const {
@@ -42,10 +42,13 @@ const ProductCreate = () => {
     createProduct(values, user.token)
       .then(res => {
         console.log(res);
+        toast.success(`"${res.data.title}" has been created`);
+        history.push('/admin/products');
       })
       .catch(err => {
         console.log(err);
-        if (err.response.status === 400) toast.error(err.response.data);
+        // if (err.response.status === 400) toast.error(err.response.data);
+        toast.error(err.response.data.err);
       });
   };
 
