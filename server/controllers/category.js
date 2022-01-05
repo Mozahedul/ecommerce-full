@@ -1,6 +1,7 @@
 const slugify = require('slugify');
 
 const Category = require('../models/category');
+const Sub = require('../models/sub');
 
 // Save a category in the database
 module.exports.create = async (req, res) => {
@@ -52,4 +53,11 @@ module.exports.remove = async (req, res) => {
     console.log(error);
     res.status(400).send('Category delete failed');
   }
+};
+
+module.exports = (req, res) => {
+  Sub.find({ parent: req.params._id }).exec((err, subs) => {
+    if (err) console.log(err);
+    res.json(subs);
+  });
 };
