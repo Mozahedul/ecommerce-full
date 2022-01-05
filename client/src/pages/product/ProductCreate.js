@@ -73,9 +73,8 @@ const ProductCreate = ({ history }) => {
           <AdminNav />
         </div>
         <div className="col-md-10">
-          <h4>Product category</h4>
+          <h4>Product Create</h4>
           <hr />
-          {JSON.stringify(values.categories)}
           <ProductCreateForm
             handleSubmit={handleSubmit}
             handleChange={handleChange}
@@ -83,6 +82,7 @@ const ProductCreate = ({ history }) => {
             handleCategoryChange={handleCategoryChange}
             showSub={showSub}
             subOptions={subOptions}
+            setValues={setValues}
           />
         </div>
       </div>

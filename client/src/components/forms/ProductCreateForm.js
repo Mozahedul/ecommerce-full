@@ -1,10 +1,14 @@
 import React from 'react';
+import { Select } from 'antd';
+
+const { Option } = Select;
 
 const ProductCreateForm = ({
   handleSubmit,
   handleChange,
   handleCategoryChange,
   values,
+  setValues,
   subOptions,
   showSub,
 }) => {
@@ -26,6 +30,7 @@ const ProductCreateForm = ({
 
   return (
     <form onSubmit={handleSubmit}>
+      {subs}
       <div className="form-group">
         <label>Title</label>
         <input
@@ -37,9 +42,8 @@ const ProductCreateForm = ({
           autoFocus
         />
       </div>
-      {categories.length}
-      <br />
 
+      <br />
       <div className="form-group">
         <label>Description</label>
         <input
@@ -144,7 +148,26 @@ const ProductCreateForm = ({
         </select>
       </div>
       <br />
-      {subOptions.length}
+
+      <div className="form-group">
+        <label>Sub Categories</label>
+        <Select
+          className="form-control"
+          mode="multiple"
+          placeholder="Please select"
+          value={subs}
+          onChange={value => setValues({ ...values, subs: value })}
+        >
+          <Option key="1" value="one">
+            Option one
+          </Option>
+          <Option key="2" value="two">
+            Option two
+          </Option>
+        </Select>
+      </div>
+      <br />
+
       <div className="form-group">
         <button type="submit" className="btn btn-outline btn-primary">
           Save
