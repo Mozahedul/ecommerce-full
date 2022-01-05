@@ -158,7 +158,7 @@ const ProductCreateForm = ({
             value={subs}
             onChange={value => setValues({ ...values, subs: value })}
           >
-            {subOptions.length &&
+            {subOptions.length > 0 &&
               subOptions.map(s => (
                 <Option key={s._id} value={s._id}>
                   {s.name}
