@@ -23,7 +23,8 @@ const initialState = {
 };
 const ProductCreate = ({ history }) => {
   const [values, setValues] = useState(initialState);
-  const [subOptions, setSubOptions] = useState([])
+  const [subOptions, setSubOptions] = useState([]);
+  const [showSub, setShowSub] = useState(false);
 
   // redux
   const { user } = useSelector(state => ({ ...state }));
@@ -61,8 +62,8 @@ const ProductCreate = ({ history }) => {
     setValues({ ...values, category: e.target.value });
     getCategorySubs(e.target.value).then(res => {
       console.log('Sub option on category clicked', res);
-      setSubOptions(res.data)
-    })
+      setSubOptions(res.data);
+    });
   };
 
   return (
@@ -80,6 +81,8 @@ const ProductCreate = ({ history }) => {
             handleChange={handleChange}
             values={values}
             handleCategoryChange={handleCategoryChange}
+            showSub={showSub}
+            subOptions={subOptions}
           />
         </div>
       </div>
