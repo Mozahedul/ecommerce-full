@@ -6,6 +6,7 @@ const ProductCreateForm = ({ handleSubmit, handleChange, values }) => {
     description,
     price,
     category,
+    categories,
     subs,
     shipping,
     quantity,
@@ -29,7 +30,9 @@ const ProductCreateForm = ({ handleSubmit, handleChange, values }) => {
           autoFocus
         />
       </div>
+      {categories.length}
       <br />
+
       <div className="form-group">
         <label>Description</label>
         <input
@@ -41,6 +44,7 @@ const ProductCreateForm = ({ handleSubmit, handleChange, values }) => {
         />
       </div>
       <br />
+
       <div className="form-group">
         <label>Price</label>
         <input
@@ -52,6 +56,7 @@ const ProductCreateForm = ({ handleSubmit, handleChange, values }) => {
         />
       </div>
       <br />
+
       <div className="form-group">
         <label>Shipping</label>
         <select
@@ -66,6 +71,7 @@ const ProductCreateForm = ({ handleSubmit, handleChange, values }) => {
         </select>
       </div>
       <br />
+
       <div className="form-group">
         <label>Quantity</label>
         <input
@@ -77,6 +83,7 @@ const ProductCreateForm = ({ handleSubmit, handleChange, values }) => {
         />
       </div>
       <br />
+
       <div className="form-group">
         <label>Color</label>
         <select
@@ -94,6 +101,7 @@ const ProductCreateForm = ({ handleSubmit, handleChange, values }) => {
         </select>
       </div>
       <br />
+
       <div className="form-group">
         <label>Brand</label>
         <select
@@ -108,6 +116,24 @@ const ProductCreateForm = ({ handleSubmit, handleChange, values }) => {
               {brand}
             </option>
           ))}
+        </select>
+      </div>
+      <br />
+
+      <div className="form-group">
+        <label>Category</label>
+        <select
+          name="category"
+          className="form-control"
+          onChange={handleChange}
+        >
+          <option>Please select</option>
+          {categories.length > 0 &&
+            categories.map(c => (
+              <option key={c._id} value={c._id}>
+                {c.name}
+              </option>
+            ))}
         </select>
       </div>
       <br />

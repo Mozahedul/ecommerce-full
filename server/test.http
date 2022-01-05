@@ -1,4 +1,4 @@
-get {{hostname}}/category/latvia
+get {{hostname}}/categories
  
 ###
 

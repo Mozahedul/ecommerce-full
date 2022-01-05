@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import AdminNav from '../../components/nav/AdminNav';
 import { createProduct } from '../../functions/product';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import ProductCreateForm from '../../components/forms/ProductCreateForm';
+import { getCategories } from '../../functions/category';
 
 const initialState = {
   title: '',
@@ -22,8 +23,16 @@ const initialState = {
 };
 const ProductCreate = ({ history }) => {
   const [values, setValues] = useState(initialState);
+
+  // redux
   const { user } = useSelector(state => ({ ...state }));
- 
+
+  useEffect(() => {
+    loadCategories();
+  }, []);
+
+  const loadCategories = () =>
+    getCategories().then(c => setValues({ ...values, categories: c.data }));
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -54,7 +63,7 @@ const ProductCreate = ({ history }) => {
         <div className="col-md-10">
           <h4>Product category</h4>
           <hr />
-          {JSON.stringify(values)}
+          {JSON.stringify(values.categories)}
           <ProductCreateForm
             handleSubmit={handleSubmit}
             handleChange={handleChange}
