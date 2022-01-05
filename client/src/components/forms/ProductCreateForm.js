@@ -30,7 +30,6 @@ const ProductCreateForm = ({
 
   return (
     <form onSubmit={handleSubmit}>
-      {subs}
       <div className="form-group">
         <label>Title</label>
         <input
@@ -149,23 +148,25 @@ const ProductCreateForm = ({
       </div>
       <br />
 
-      <div className="form-group">
-        <label>Sub Categories</label>
-        <Select
-          className="form-control"
-          mode="multiple"
-          placeholder="Please select"
-          value={subs}
-          onChange={value => setValues({ ...values, subs: value })}
-        >
-          <Option key="1" value="one">
-            Option one
-          </Option>
-          <Option key="2" value="two">
-            Option two
-          </Option>
-        </Select>
-      </div>
+      {showSub && (
+        <div className="form-group">
+          <label>Sub Categories</label>
+          <Select
+            className="form-control"
+            mode="multiple"
+            placeholder="Please select"
+            value={subs}
+            onChange={value => setValues({ ...values, subs: value })}
+          >
+            {subOptions.length &&
+              subOptions.map(s => (
+                <Option key={s._id} value={s._id}>
+                  {s.name}
+                </Option>
+              ))}
+          </Select>
+        </div>
+      )}
       <br />
 
       <div className="form-group">

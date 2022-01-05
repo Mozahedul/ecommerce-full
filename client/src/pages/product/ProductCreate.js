@@ -59,11 +59,12 @@ const ProductCreate = ({ history }) => {
   const handleCategoryChange = e => {
     e.preventDefault();
     console.log('CATEGORY CLICKED ===> ', e.target.value);
-    setValues({ ...values, category: e.target.value });
+    setValues({ ...values, subs: [], category: e.target.value });
     getCategorySubs(e.target.value).then(res => {
       console.log('Sub option on category clicked', res);
       setSubOptions(res.data);
     });
+    setShowSub(true);
   };
 
   return (
@@ -75,6 +76,7 @@ const ProductCreate = ({ history }) => {
         <div className="col-md-10">
           <h4>Product Create</h4>
           <hr />
+          {JSON.stringify(values.subs)}
           <ProductCreateForm
             handleSubmit={handleSubmit}
             handleChange={handleChange}
