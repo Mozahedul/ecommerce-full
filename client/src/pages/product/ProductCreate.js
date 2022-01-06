@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import ProductCreateForm from '../../components/forms/ProductCreateForm';
 import { getCategories, getCategorySubs } from '../../functions/category';
+import FileUpload from '../../components/forms/FileUpload';
 
 const initialState = {
   title: '',
@@ -77,6 +78,11 @@ const ProductCreate = ({ history }) => {
           <h4>Product Create</h4>
           <hr />
           {JSON.stringify(values.subs)}
+
+          <div className="p-3">
+            <FileUpload />
+          </div>
+          <br />
           <ProductCreateForm
             handleSubmit={handleSubmit}
             handleChange={handleChange}
