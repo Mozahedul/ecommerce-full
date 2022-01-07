@@ -20,7 +20,7 @@ mongoose
     useUnifiedTopology: true,
   })
   .then(() => console.log('DATABASE CONNECTED'))
-  .catch((error) => console.log('DATABASE CONNECTION ERROR', error));
+  .catch(error => console.log('DATABASE CONNECTION ERROR', error));
 
 // Middlewares
 app.use(morgan('dev'));
@@ -28,9 +28,18 @@ app.use(bodyParser.json({ limit: '2mb' }));
 app.use(cors());
 
 // Routes
-fs.readdirSync('./routes').map((r) =>
-  app.use('/api', require('./routes/' + r)),
-);
+/* 
+Here, fs.readdirSync('./routes') returns 
+[
+  'auth.js',
+  'category.js',
+  'cloudinary.js',
+  'product.js',
+  'sub.js',
+  'user.js'
+]
+*/
+fs.readdirSync('./routes').map(r => app.use('/api', require('./routes/' + r)));
 
 // Listen the server
 const PORT = process.env.PORT || 8000;
