@@ -17,7 +17,12 @@ module.exports.create = async (req, res) => {
 };
 
 // populate() method is used to get reference document in other collection
-module.exports.read = async (req, res) => {
-  const products = await Product.find({});
+module.exports.listAll = async (req, res) => {
+  const products = await Product.find({})
+    .limit(parseInt(req.params.count, 10))
+    .populate('category')
+    .populate('subs')
+    .sort([['createdAt', 'desc']])
+    .exec(); 
   res.json(products);
 };
