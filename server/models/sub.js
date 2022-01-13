@@ -8,8 +8,8 @@ const subSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
-      maxlength: [32, 'Too long'],
       minlength: [2, 'Too short'],
+      maxlength: [32, 'Too long'],
     },
     slug: {
       type: String,
