@@ -3,7 +3,7 @@ import AdminProductCard from '../../components/cards/AdminProductCard';
 import AdminNav from '../../components/nav/AdminNav';
 import { getProductsByCount } from '../../functions/product';
 
-const AllProducts = () => {
+const AdminDashboard = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -46,7 +46,7 @@ const AllProducts = () => {
                 <div
                   key={product._id}
                   className="col-md-4"
-                  style={{ marginTop: '15px', marginBottom: '15px' }}
+                  style={{ marginBottom: '15px' }}
                 >
                   <AdminProductCard product={product} />
                 </div>
@@ -59,4 +59,4 @@ const AllProducts = () => {
   );
 };
 
-export default AllProducts;
+export default AdminDashboard;
