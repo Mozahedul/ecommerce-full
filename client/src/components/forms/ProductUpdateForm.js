@@ -72,7 +72,6 @@ const ProductUpdateForm = ({
           onChange={handleChange}
           value={shipping}
         >
-          <option>Please select</option>
           <option value="no">No</option>
           <option value="yes">Yes</option>
         </select>
@@ -99,7 +98,6 @@ const ProductUpdateForm = ({
           value={color}
           onChange={handleChange}
         >
-          <option>Please select</option>
           {colors.map(color => (
             <option key={color} value={color}>
               {color}
@@ -144,7 +142,7 @@ const ProductUpdateForm = ({
         </select>
       </div>
       <br />
-{/* 
+      {/* 
       {showSub && (
         <div className="form-group">
           <label>Sub Categories</label>
