@@ -53,6 +53,7 @@
     "prettier/prettier": "off",
     "import/no-dynamic-require": "off",
     "global-require": "off",
-    "prefer-template": "off"
+    "prefer-template": "off",
+    "react-hooks/exhaustive-deps": "off"
   }
 }
