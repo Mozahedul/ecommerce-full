@@ -21,8 +21,9 @@ import CategoryCreate from './pages/admin/category/CategoryCreate';
 import CategoryUpdate from './pages/admin/category/CategoryUpdate';
 import SubCreate from './pages/admin/sub/SubCreate';
 import SubUpdate from './pages/admin/sub/SubUpdate';
-import ProductCreate from './pages/product/ProductCreate';
-import AllProducts from './pages/product/AllProducts';
+// import ProductCreate from './pages/product/ProductCreate';
+import AllProducts from './pages/admin/product/AllProducts';
+import ProductCreate from './pages/admin/product/ProductCreate';
 
 const App = () => {
   const dispatch = useDispatch();

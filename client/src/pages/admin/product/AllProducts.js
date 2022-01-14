@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import AdminProductCard from '../../components/cards/AdminProductCard';
-import AdminNav from '../../components/nav/AdminNav';
-import { getProductsByCount } from '../../functions/product';
+import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+import AdminProductCard from '../../../components/cards/AdminProductCard';
+import AdminNav from '../../../components/nav/AdminNav';
+import { getProductsByCount, removeProduct } from '../../../functions/product';
 
-const AdminDashboard = () => {
+const AllProducts = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
+  const { user } = useSelector(state => ({ ...state }));
 
   useEffect(() => {
     loadAllProducts();
@@ -22,6 +25,23 @@ const AdminDashboard = () => {
         setLoading(false);
         console.log(err);
       });
+  };
+
+  const handleRemove = slug => {
+    const answer = window.confirm('Are you sure to delete?');
+    if (answer) {
+      // console.log('Delete the product ==> ', slug);
+      removeProduct(slug, user.token)
+        .then(res => {
+          console.log(res);
+          loadAllProducts();
+          return toast.error(`"${res.data.title}" has been deleted`);
+        })
+        .catch(err => {
+          console.log(err);
+          if (err.response.status === 400) toast.error(err.response.data);
+        });
+    }
   };
 
   return (
@@ -48,7 +68,10 @@ const AdminDashboard = () => {
                   className="col-md-4"
                   style={{ marginBottom: '15px' }}
                 >
-                  <AdminProductCard product={product} />
+                  <AdminProductCard
+                    product={product}
+                    handleRemove={handleRemove}
+                  />
                 </div>
               ))}
             </div>
@@ -59,4 +82,4 @@ const AdminDashboard = () => {
   );
 };
 
-export default AdminDashboard;
+export default AllProducts;

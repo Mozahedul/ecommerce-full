@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import AdminNav from '../../components/nav/AdminNav';
-import { createProduct } from '../../functions/product';
+import AdminNav from '../../../components/nav/AdminNav';
+import { createProduct } from '../../../functions/product';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import ProductCreateForm from '../../components/forms/ProductCreateForm';
-import { getCategories, getCategorySubs } from '../../functions/category';
-import FileUpload from '../../components/forms/FileUpload';
+import ProductCreateForm from '../../../components/forms/ProductCreateForm';
+import { getCategories, getCategorySubs } from '../../../functions/category';
+import FileUpload from '../../../components/forms/FileUpload';
 import { LoadingOutlined } from '@ant-design/icons';
 
 const initialState = {
