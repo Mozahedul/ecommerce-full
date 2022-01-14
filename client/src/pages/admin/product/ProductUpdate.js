@@ -1,9 +1,15 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import AdminNav from '../../../components/nav/AdminNav';
+// import { useParams } from 'react-router-dom';
 
-const ProductUpdate = ({ history }) => {
+const ProductUpdate = ({ match }) => {
   const { user } = useSelector(state => ({ ...state }));
+
+  // const { slug } = useParams();
+  // console.log(useParams());
+
+  const { slug } = match.params;
 
   return (
     <div className="container-fluid">
@@ -13,6 +19,7 @@ const ProductUpdate = ({ history }) => {
         </div>
         <div className="col-md-10">
           <h4>Product Update</h4>
+          {JSON.stringify(slug)}
           <hr />
         </div>
       </div>

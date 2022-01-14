@@ -41,6 +41,7 @@ const ProductCreate = ({ history }) => {
 
   const handleSubmit = e => {
     e.preventDefault();
+    // setValues(initialState);
     createProduct(values, user.token)
       .then(res => {
         console.log(res);
@@ -61,7 +62,7 @@ const ProductCreate = ({ history }) => {
 
   const handleCategoryChange = e => {
     e.preventDefault();
-    console.log('CATEGORY CLICKED ===> ', e.target.value);
+    // console.log('CATEGORY CLICKED ===> ', e.target.value);
     setValues({ ...values, subs: [], category: e.target.value });
     getCategorySubs(e.target.value).then(res => {
       console.log('Sub option on category clicked', res);
@@ -83,7 +84,7 @@ const ProductCreate = ({ history }) => {
             <h4>Product Create</h4>
           )}
           <hr />
-          {JSON.stringify(values.images)}
+          {/* {JSON.stringify(values.images)} */}
 
           <div className="p-3">
             <FileUpload

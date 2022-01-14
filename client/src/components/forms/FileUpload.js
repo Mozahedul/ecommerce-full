@@ -8,6 +8,7 @@ import { Badge } from 'antd';
 const FileUpload = ({ values, setValues, setLoading }) => {
   const { user } = useSelector(state => ({ ...state }));
   const fileUploadAndResize = e => {
+    e.preventDefault();
     // console.log(e.target.files);
     // resize
     let files = e.target.files;
