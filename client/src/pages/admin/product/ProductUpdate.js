@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import ProductUpdateForm from '../../../components/forms/ProductUpdateForm';
 import AdminNav from '../../../components/nav/AdminNav';
 import { getProduct } from '../../../functions/product';
 // import { useParams } from 'react-router-dom';
@@ -42,6 +43,15 @@ const ProductUpdate = ({ match }) => {
     });
   };
 
+  const handleSubmit = e => {
+    e.preventDefault();
+  };
+
+  const handleChange = e => {
+    setValues({ ...values, [e.target.name]: e.target.value });
+    console.log(e.target.name, '===> ', e.target.value);
+  };
+
   return (
     <div className="container-fluid">
       <div className="row">
@@ -50,7 +60,13 @@ const ProductUpdate = ({ match }) => {
         </div>
         <div className="col-md-10">
           <h4>Product Update</h4>
-          {JSON.stringify(values)}
+          {/* {JSON.stringify(values)} */}
+          <ProductUpdateForm
+            handleSubmit={handleSubmit}
+            handleChange={handleChange}
+            setValues={setValues}
+            values={values}
+          />
           <hr />
         </div>
       </div>
