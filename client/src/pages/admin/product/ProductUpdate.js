@@ -2,14 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import ProductUpdateForm from '../../../components/forms/ProductUpdateForm';
 import AdminNav from '../../../components/nav/AdminNav';
+import { getCategories, getCategorySubs } from '../../../functions/category';
 import { getProduct } from '../../../functions/product';
+
 // import { useParams } from 'react-router-dom';
 
 const initialState = {
   title: '',
   description: '',
   price: '',
-  categories: [],
   category: '',
   subs: [],
   shipping: '',
@@ -24,6 +25,9 @@ const initialState = {
 const ProductUpdate = ({ match }) => {
   const { user } = useSelector(state => ({ ...state }));
   const [values, setValues] = useState(initialState);
+  const [subOptions, setSubOptions] = useState([]);
+  const [showSub, setShowSub] = useState(false);
+  const [categories, setCategories] = useState([]);
 
   console.log(values);
 
@@ -34,6 +38,7 @@ const ProductUpdate = ({ match }) => {
 
   useEffect(() => {
     loadProduct();
+    loadCategories();
   }, []);
 
   const loadProduct = () => {
@@ -43,6 +48,12 @@ const ProductUpdate = ({ match }) => {
     });
   };
 
+  const loadCategories = () =>
+    getCategories().then(c => {
+      console.log('Get CATEGORIES IN UPDATE PRODUCT ==> ', c.data);
+      setCategories(c.data);
+    });
+
   const handleSubmit = e => {
     e.preventDefault();
   };
@@ -50,6 +61,17 @@ const ProductUpdate = ({ match }) => {
   const handleChange = e => {
     setValues({ ...values, [e.target.name]: e.target.value });
     console.log(e.target.name, '===> ', e.target.value);
+  };
+
+  const handleCategoryChange = e => {
+    e.preventDefault();
+    // console.log('CATEGORY CLICKED ===> ', e.target.value);
+    setValues({ ...values, subs: [], category: e.target.value });
+    getCategorySubs(e.target.value).then(res => {
+      console.log('Sub option on category clicked', res);
+      setSubOptions(res.data);
+    });
+    setShowSub(true);
   };
 
   return (
@@ -66,6 +88,9 @@ const ProductUpdate = ({ match }) => {
             handleChange={handleChange}
             setValues={setValues}
             values={values}
+            handleCategoryChange={handleCategoryChange}
+            categories={categories}
+            subOptions={subOptions}
           />
           <hr />
         </div>

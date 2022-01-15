@@ -8,13 +8,14 @@ const ProductUpdateForm = ({
   handleChange,
   handleCategoryChange,
   values,
+  categories,
+  subOptions,
 }) => {
   const {
     title,
     description,
     price,
     category,
-    categories,
     subs,
     shipping,
     quantity,
@@ -25,6 +26,7 @@ const ProductUpdateForm = ({
     brand,
   } = values;
 
+  console.log(categories);
   return (
     <form onSubmit={handleSubmit}>
       <div className="form-group">
@@ -132,7 +134,7 @@ const ProductUpdateForm = ({
           className="form-control"
           onChange={handleCategoryChange}
         >
-          <option>Please select</option>
+          <option>{category ? category.name : 'Please select'}</option>
           {categories.length > 0 &&
             categories.map(c => (
               <option key={c._id} value={c._id}>
