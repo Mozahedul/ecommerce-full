@@ -1,5 +1,7 @@
+import { LoadingOutlined } from '@ant-design/icons';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import FileUpload from '../../../components/forms/FileUpload';
 import ProductUpdateForm from '../../../components/forms/ProductUpdateForm';
 import AdminNav from '../../../components/nav/AdminNav';
 import { getCategories, getCategorySubs } from '../../../functions/category';
@@ -26,10 +28,11 @@ const ProductUpdate = ({ match }) => {
   const { user } = useSelector(state => ({ ...state }));
   const [values, setValues] = useState(initialState);
   const [subOptions, setSubOptions] = useState([]);
-  const [showSub, setShowSub] = useState(false);
+  // const [showSub, setShowSub] = useState(false);
   const [categories, setCategories] = useState([]);
   const [arrayOfSubs, setArrayOfSubs] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
+  const [loading, setLoading] = useState(false);
 
   console.log(values);
 
@@ -102,8 +105,23 @@ const ProductUpdate = ({ match }) => {
           <AdminNav />
         </div>
         <div className="col-md-10">
-          <h4>Product Update</h4>
-          {JSON.stringify(values)}
+          {loading ? (
+            <LoadingOutlined className="text-danger" />
+          ) : (
+            <h4 style={{ marginTop: '20px', marginBottom: '20px' }}>
+              Product Update
+            </h4>
+          )}
+          {/* {JSON.stringify(values)} */}
+          <hr />
+          <div className="p-3">
+            <FileUpload
+              values={values}
+              setValues={setValues}
+              setLoading={setLoading}
+            />
+          </div>
+
           <ProductUpdateForm
             handleSubmit={handleSubmit}
             handleChange={handleChange}

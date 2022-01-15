@@ -101,7 +101,7 @@ const FileUpload = ({ values, setValues, setLoading }) => {
           </span>
         ))}
       </div>
-      <div className="form-group">
+      <div className="form-group" style={{ marginTop: '30px' }}>
         <label className="btn btn-primary btn-raised">
           Choose Image File
           <input
