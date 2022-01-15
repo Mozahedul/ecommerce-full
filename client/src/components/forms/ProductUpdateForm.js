@@ -8,8 +8,11 @@ const ProductUpdateForm = ({
   handleChange,
   handleCategoryChange,
   values,
+  setValues,
   categories,
   subOptions,
+  arrayOfSubs,
+  setArrayOfSubIds,
 }) => {
   const {
     title,
@@ -144,27 +147,23 @@ const ProductUpdateForm = ({
         </select>
       </div>
       <br />
-      {/* 
-      {showSub && (
-        <div className="form-group">
-          <label>Sub Categories</label>
-          <Select
-            className="form-control"
-            mode="multiple"
-            placeholder="Please select"
-            value={subs}
-            onChange={value => setValues({ ...values, subs: value })}
-          >
-            {subOptions.length > 0 &&
-              subOptions.map(s => (
-                <Option key={s._id} value={s._id}>
-                  {s.name}
-                </Option>
-              ))}
-          </Select>
-        </div>
-      )}
-      <br /> */}
+      <div className="form-group">
+        <label>Sub Categories</label>
+        <Select
+          mode="multiple"
+          placeholder="Please select"
+          className="form-control"
+          // value={subs}
+          onChange={value => setValues({ ...values, subs: value })}
+        >
+          {subOptions.length > 0 &&
+            subOptions.map(s => (
+              <Option key={s._id} value={s._id}>
+                {s.name}
+              </Option>
+            ))}
+        </Select>
+      </div>
 
       <div className="form-group">
         <button type="submit" className="btn btn-outline btn-primary">

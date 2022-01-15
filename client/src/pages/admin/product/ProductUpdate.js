@@ -28,6 +28,7 @@ const ProductUpdate = ({ match }) => {
   const [subOptions, setSubOptions] = useState([]);
   const [showSub, setShowSub] = useState(false);
   const [categories, setCategories] = useState([]);
+  const [arrayOfSubs, setArrayOfSubIds] = useState([]);
 
   console.log(values);
 
@@ -44,7 +45,15 @@ const ProductUpdate = ({ match }) => {
   const loadProduct = () => {
     getProduct(slug).then(p => {
       // console.log('single product ==> ', p);
+      // 1. load single product
       setValues({ ...values, ...p.data });
+      // 2. load single product category subs to
+      // show as default in antd Select
+      getCategorySubs(p.data.category._id).then(res => setSubOptions(res.data));
+      let arr = [];
+      p.data.subs.map(s => arr.push(s._id));
+      console.log('FROM ARRAY ==> ', arr);
+      setArrayOfSubIds(prev => arr); // required for ant design select to work
     });
   };
 
@@ -71,7 +80,6 @@ const ProductUpdate = ({ match }) => {
       console.log('Sub option on category clicked', res);
       setSubOptions(res.data);
     });
-    setShowSub(true);
   };
 
   return (
@@ -91,6 +99,8 @@ const ProductUpdate = ({ match }) => {
             handleCategoryChange={handleCategoryChange}
             categories={categories}
             subOptions={subOptions}
+            arrayOfSubs={arrayOfSubs}
+            setArrayOfSubIds={setArrayOfSubIds}
           />
           <hr />
         </div>
