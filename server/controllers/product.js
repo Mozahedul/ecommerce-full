@@ -63,6 +63,9 @@ module.exports.update = async (req, res) => {
     res.json(updated);
   } catch (error) {
     console.log('PRODUCT UPDATE ERROR ===>', error);
-    res.status(400).send('Product update failed');
+    // res.status(400).send('Product update failed');
+    res.status(400).json({
+      err: error.message,
+    });
   }
 };
