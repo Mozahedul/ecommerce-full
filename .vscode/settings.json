@@ -6,5 +6,6 @@
     "Local Env": {
       "hostname": "http://localhost:8000/api"
     }
-  }
+  },
+  "editor.fontSize": 12
 }
