@@ -10,7 +10,7 @@ const ProductCard = ({ product }) => {
   // Destructure the product object
   const { images, title, description, slug } = product;
 
-  const handleRemove = () => {
+  const addToCard = () => {
     //
   };
   return (
@@ -30,7 +30,7 @@ const ProductCard = ({ product }) => {
         </Link>,
         <>
           <ShoppingCartOutlined
-            onClick={() => handleRemove(slug)}
+            onClick={() => addToCard(slug)}
             className="text-danger"
           />
           <br /> Add to Cart
