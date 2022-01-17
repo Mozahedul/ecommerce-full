@@ -90,6 +90,7 @@ module.exports.update = async (req, res) => {
 
 // WITH PAGINATION
 module.exports.list = async (req, res) => {
+  console.table(req.body);
   try {
     // sort = createdAt/updatedAt, order = desc/asc, limit = 3
     const { sort, order, page } = req.body;
@@ -108,6 +109,7 @@ module.exports.list = async (req, res) => {
     console.log(error);
   }
 };
+
 module.exports.productsCount = async (req, res) => {
   const total = await Product.find({}).estimatedDocumentCount().exec();
   res.json(total);
