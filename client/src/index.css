@@ -23,3 +23,9 @@ code {
   -o-object-fit: contain;
   object-fit: contain;
 }
+
+.card-image {
+  height: 450px;
+  -o-object-fit: contain;
+  object-fit: contain;
+}
