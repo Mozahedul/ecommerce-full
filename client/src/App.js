@@ -25,6 +25,7 @@ import SubUpdate from './pages/admin/sub/SubUpdate';
 import AllProducts from './pages/admin/product/AllProducts';
 import ProductCreate from './pages/admin/product/ProductCreate';
 import ProductUpdate from './pages/admin/product/ProductUpdate';
+import Product from './pages/Product';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -95,6 +96,7 @@ const App = () => {
           <Route exact path="/register" component={Register} />
           <Route exact path="/" component={Home} />
           <Route exact path="/comp" />
+          <Route exact path="/product/:slug" component={Product}></Route>
         </Switch>
       </Router>
     </>
