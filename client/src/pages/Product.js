@@ -22,7 +22,14 @@ const Product = ({ match }) => {
       </div>
 
       <div className="row">
-        <div>Related products</div>
+        <div
+          className="col-md-12"
+          style={{ textAlign: 'center', padding: '15px 0' }}
+        >
+          <hr />
+          <h4>Related Products</h4>
+          <hr />
+        </div>
       </div>
     </div>
   );
