@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
+import SingleProduct from '../components/cards/SingleProduct';
 import { getProduct } from '../functions/product';
 
 const Product = ({ match }) => {
@@ -14,7 +15,17 @@ const Product = ({ match }) => {
 
   const loadSingleProduct = () =>
     getProduct(slug).then(res => setProduct(res.data));
-  return <div>{JSON.stringify(product)}</div>;
+  return (
+    <div className="container-fluid">
+      <div className="row" style={{ marginTop: '30px' }}>
+        <SingleProduct product={product} />
+      </div>
+
+      <div className="row">
+        <div>Related products</div>
+      </div>
+    </div>
+  );
 };
 
 export default Product;
