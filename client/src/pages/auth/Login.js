@@ -4,7 +4,7 @@ import { GoogleOutlined, MailOutlined } from '@ant-design/icons';
 import { auth, googleAuthProvider } from '../../firebase';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { createOrUpdateUser } from '../../functions/auth';
 
 const Login = ({ history }) => {
@@ -13,23 +13,36 @@ const Login = ({ history }) => {
   const [password, setPassword] = useState('mozahed525');
   const [loading, setLoading] = useState(false);
 
-  const { user } = useSelector((state) => ({ ...state }));
+  const { user } = useSelector(state => ({ ...state }));
+
+  const location = useLocation();
+  let intended = location.state;
 
   useEffect(() => {
-    if (user && user.token) history.push('/');
-  }, [user, history]);
-
-  const roleBasedDirect = (res) => {
-    // if (user) {
-    if (res.data.role === 'admin') {
-      history.push('/admin/dashboard');
+    if (intended) {
+      return;
     } else {
-      history.push('/user/history');
+      if (user && user.token) history.push('/');
     }
+  }, [user, history, intended]);
+
+  const roleBasedDirect = res => {
+    // Check if intended
+
+    if (intended) {
+      history.push(intended.from);
+    } else {
+      if (res.data.role === 'admin') {
+        history.push('/admin/dashboard');
+      } else {
+        history.push('/user/history');
+      }
+    }
+
     // }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
     setLoading(true);
     try {
@@ -41,7 +54,7 @@ const Login = ({ history }) => {
       const idTokenResult = await user.getIdTokenResult();
 
       createOrUpdateUser(idTokenResult.token)
-        .then((res) => {
+        .then(res => {
           dispatch({
             type: 'LOGGED_IN_USER',
             payload: {
@@ -54,7 +67,7 @@ const Login = ({ history }) => {
           });
           roleBasedDirect(res);
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error);
         });
       history.push('/');
@@ -65,15 +78,15 @@ const Login = ({ history }) => {
     }
   };
 
-  const googleLogin = async (e) => {
+  const googleLogin = async e => {
     e.preventDefault();
     auth
       .signInWithPopup(googleAuthProvider)
-      .then(async (result) => {
+      .then(async result => {
         const { user } = result;
         const idTokenResult = await user.getIdTokenResult();
         createOrUpdateUser(idTokenResult.token)
-          .then((res) => {
+          .then(res => {
             dispatch({
               type: 'LOGGED_IN_USER',
               payload: {
@@ -87,12 +100,12 @@ const Login = ({ history }) => {
 
             roleBasedDirect(res);
           })
-          .catch((error) => {
+          .catch(error => {
             console.log(error);
           });
         history.push('/');
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err);
         toast.error(err.message);
       });
@@ -111,7 +124,7 @@ const Login = ({ history }) => {
                 className="form-control"
                 placeholder="Your email address"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={e => setEmail(e.target.value)}
                 autoFocus
               />
               <input
@@ -120,7 +133,7 @@ const Login = ({ history }) => {
                 className="form-control"
                 placeholder="Your password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={e => setPassword(e.target.value)}
               />
               <Link
                 to="/forgot/password"
