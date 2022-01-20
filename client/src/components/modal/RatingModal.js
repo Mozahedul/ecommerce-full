@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { Modal, Button } from 'antd';
-import { toast } from 'react-toastify';
-import { useSelector } from 'react-redux';
 import { StarOutlined } from '@ant-design/icons';
+import { Modal } from 'antd';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 export const RatingModal = ({ children }) => {
   const { user } = useSelector(state => ({ ...state }));

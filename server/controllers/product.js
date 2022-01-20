@@ -121,11 +121,15 @@ module.exports.productStar = async (req, res) => {
   const user = await User.findOne({ email: req.user.email }).exec();
   const { star } = req.body;
 
+  console.log('From backend ===> ', product);
+
   // Who is updating?
   // Check if currently logged in user have already added rating to this product?
   const existingRatingObject = product.ratings.find(
     ele => ele.postedBy.toString() === user._id.toString()
   );
+
+  console.log('From rating', existingRatingObject);
 
   // if user haven't left rating yet, push it
   if (existingRatingObject === undefined) {
@@ -144,7 +148,7 @@ module.exports.productStar = async (req, res) => {
       {
         ratings: { $elemMatch: existingRatingObject },
       },
-      { $set: { 'rating.$.star': star } },
+      { $set: { 'ratings.$.star': star } },
       { new: true }
     ).exec();
     console.log('Rating updated ===> ', ratingUpdated);

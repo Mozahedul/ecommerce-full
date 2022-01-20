@@ -1,18 +1,18 @@
-import React from 'react';
-import { Card, Tabs } from 'antd';
-import { Link } from 'react-router-dom';
 import { HeartOutlined, ShoppingCartOutlined } from '@ant-design/icons';
+import { Card, Tabs } from 'antd';
+import React from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import Laptop from '../../images/laptop.jpg';
-import ProductListItems from './ProductListItems';
+import { Link } from 'react-router-dom';
 import StarRatings from 'react-star-ratings';
+import Laptop from '../../images/laptop.jpg';
 import RatingModal from '../modal/RatingModal';
-const { Meta } = Card;
+import ProductListItems from './ProductListItems';
 
 const { TabPane } = Tabs;
 
-const SingleProduct = ({ product }) => {
+// This is children component of Product component
+const SingleProduct = ({ product, onStarClick, star }) => {
   const { _id, title, images, description } = product;
   return (
     <>
@@ -56,13 +56,12 @@ const SingleProduct = ({ product }) => {
               Add to Wishlist
             </Link>,
             <RatingModal>
+              {/* <StarRating is the children component of <RatingModal/> */}
               <StarRatings
                 name={_id}
                 numberOfStars={5}
-                rating={2}
-                changeRating={(newRating, name) =>
-                  console.log('newRating', newRating, 'name', name)
-                }
+                rating={star}
+                changeRating={onStarClick}
                 isSelectable={true}
                 starRatedColor="orange"
               />

@@ -1,13 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import SingleProduct from '../components/cards/SingleProduct';
-import { getProduct } from '../functions/product';
+import { getProduct, productStar } from '../functions/product';
 
 const Product = ({ match }) => {
   const [product, setProduct] = useState({});
-  const { slug } = match.params;
+  const [star, setStar] = useState(0);
 
-  console.log(product);
+  // redux
+  const { user } = useSelector(state => ({ ...state }));
+
+  const { slug } = match.params;
 
   useEffect(() => {
     loadSingleProduct();
@@ -15,10 +19,24 @@ const Product = ({ match }) => {
 
   const loadSingleProduct = () =>
     getProduct(slug).then(res => setProduct(res.data));
+
+  const onStarClick = (newRating, name) => {
+    setStar(newRating);
+    // console.table(newRating, name);
+    productStar(name, newRating, user.token).then(res => {
+      // console.log('Rating clicked ===> ', res.data);
+      loadSingleProduct(); // to show the updated rating in real time
+    });
+  };
+
   return (
     <div className="container-fluid">
       <div className="row" style={{ marginTop: '30px' }}>
-        <SingleProduct product={product} />
+        <SingleProduct
+          product={product}
+          onStarClick={onStarClick}
+          star={star}
+        />
       </div>
 
       <div className="row">
