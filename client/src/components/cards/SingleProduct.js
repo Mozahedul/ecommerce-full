@@ -44,9 +44,19 @@ const SingleProduct = ({ product, onStarClick, star }) => {
         <h3 className="bg-info" style={{ padding: '18px' }}>
           {title}
         </h3>
-        {product && product.ratings && product.ratings.length > 0
-          ? showAverage(product)
-          : 'No rating yet'}
+        {product && product.ratings && product.ratings.length > 0 ? (
+          showAverage(product)
+        ) : (
+          <div
+            style={{
+              paddingTop: '15px',
+              paddingBottom: '15px',
+              textAlign: 'center',
+            }}
+          >
+            No rating yet
+          </div>
+        )}
         <Card
           actions={[
             <>

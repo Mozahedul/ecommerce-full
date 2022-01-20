@@ -32,7 +32,14 @@ export const showAverage = p => {
         }}
       >
         <span>
-          <StarRatings rating={result} />
+          <StarRatings
+            starDimension="20px"
+            starSpacing="1px"
+            editing={false}
+            rating={result}
+            starRatedColor="rgb(241,144,30)"
+          />
+          <span style={{ paddingLeft: '2px' }}> ({p.ratings.length})</span>
         </span>
       </div>
     );
