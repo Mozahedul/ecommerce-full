@@ -5,6 +5,7 @@ import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { Link } from 'react-router-dom';
 import StarRatings from 'react-star-ratings';
+import { showAverage } from '../../functions/rating';
 import Laptop from '../../images/laptop.jpg';
 import RatingModal from '../modal/RatingModal';
 import ProductListItems from './ProductListItems';
@@ -43,7 +44,9 @@ const SingleProduct = ({ product, onStarClick, star }) => {
         <h3 className="bg-info" style={{ padding: '18px' }}>
           {title}
         </h3>
-
+        {product && product.ratings && product.ratings.length > 0
+          ? showAverage(product)
+          : 'No rating yet'}
         <Card
           actions={[
             <>
