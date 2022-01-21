@@ -155,3 +155,23 @@ module.exports.productStar = async (req, res) => {
     res.json(ratingUpdated);
   }
 };
+
+module.exports.listRelated = async (req, res) => {
+  const product = await Product.findById(req.params.productId).exec();
+
+  const related = await Product.find({
+    // $ne = not equal
+    // $ne is an operator
+    // is used to select the documents where the value of the field
+    // is not equal to the specified value
+    _id: { $ne: product._id },
+    category: product.category,
+  })
+    .limit(3)
+    .populate('category')
+    .populate('subs')
+    // .populate('postedBy')
+    .exec();
+
+  res.json(related);
+};
