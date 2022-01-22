@@ -1,6 +1,7 @@
 const slugify = require('slugify');
 
 const Category = require('../models/category');
+const Product = require('../models/product');
 const Sub = require('../models/sub');
 
 // Save a category in the database
@@ -24,7 +25,16 @@ module.exports.list = async (req, res) => {
 // View a single category
 module.exports.read = async (req, res) => {
   const category = await Category.findOne({ slug: req.params.slug }).exec();
-  res.json(category);
+  // res.json(category);
+  const products = await Product.find({ category })
+    .populate('category')
+    // .populate('postedBy', '_id, name')
+    .exec();
+
+  res.json({
+    category,
+    products,
+  });
 };
 
 // Delete a category

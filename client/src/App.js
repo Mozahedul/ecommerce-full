@@ -26,6 +26,7 @@ import AllProducts from './pages/admin/product/AllProducts';
 import ProductCreate from './pages/admin/product/ProductCreate';
 import ProductUpdate from './pages/admin/product/ProductUpdate';
 import Product from './pages/Product';
+import CategoryHome from './pages/category/CategoryHome';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -96,7 +97,8 @@ const App = () => {
           <Route exact path="/register" component={Register} />
           <Route exact path="/" component={Home} />
           <Route exact path="/comp" />
-          <Route exact path="/product/:slug" component={Product}></Route>
+          <Route exact path="/product/:slug" component={Product} />
+          <Route exact path="/category/:slug" component={CategoryHome} />
         </Switch>
       </Router>
     </>
