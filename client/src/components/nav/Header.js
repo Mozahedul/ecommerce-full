@@ -2,6 +2,7 @@ import {
   AppstoreOutlined,
   LogoutOutlined,
   SettingOutlined,
+  ShoppingOutlined,
   UserAddOutlined,
   UserOutlined,
 } from '@ant-design/icons';
@@ -42,9 +43,16 @@ const Header = () => {
       style={{ width: '100%' }}
       key="menu"
     >
-      <Item key="home" icon={<AppstoreOutlined />}>
-        <Link to="/"> Home </Link>
-      </Item>
+      <Menu.ItemGroup>
+        <Item key="home" icon={<AppstoreOutlined />}>
+          <Link to="/"> Home </Link>
+        </Item>
+      </Menu.ItemGroup>
+      <Menu.ItemGroup>
+        <Item key="shop" icon={<ShoppingOutlined />}>
+          <Link to="/shop"> Shop </Link>
+        </Item>
+      </Menu.ItemGroup>
 
       {user ? (
         <SubMenu key="SubMenu" icon={<SettingOutlined />} title={user.name}>
