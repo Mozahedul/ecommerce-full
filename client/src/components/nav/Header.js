@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
-import { Menu } from 'antd';
 import {
   AppstoreOutlined,
+  LogoutOutlined,
   SettingOutlined,
   UserAddOutlined,
   UserOutlined,
-  LogoutOutlined,
 } from '@ant-design/icons';
-
-import { Link } from 'react-router-dom';
+import { Menu } from 'antd';
 import firebase from 'firebase/compat/app';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import Search from '../forms/Search';
+
 const { SubMenu, Item } = Menu;
 
 const Header = () => {
@@ -47,12 +47,7 @@ const Header = () => {
       </Item>
 
       {user ? (
-        <SubMenu
-          key="SubMenu"
-          icon={<SettingOutlined />}
-          title={user.name}
-          style={{ marginLeft: 'auto' }}
-        >
+        <SubMenu key="SubMenu" icon={<SettingOutlined />} title={user.name}>
           <Menu.ItemGroup>
             {user && user.role === 'subscriber' && (
               <Item key="userHistory">
@@ -73,11 +68,7 @@ const Header = () => {
         </SubMenu>
       ) : (
         <>
-          <Item
-            key="login"
-            icon={<UserOutlined />}
-            style={{ marginLeft: 'auto' }}
-          >
+          <Item key="login" icon={<UserOutlined />}>
             <Link to="/login">Login</Link>
           </Item>
           <Item key="register" icon={<UserAddOutlined />}>
@@ -85,6 +76,10 @@ const Header = () => {
           </Item>
         </>
       )}
+
+      <span style={{ marginLeft: 'auto', paddingRight: '4px' }}>
+        <Search />
+      </span>
     </Menu>
   );
 };
