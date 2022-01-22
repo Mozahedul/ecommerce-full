@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
+import ProductCard from '../../components/cards/ProductCard';
 import { getCategory } from '../../functions/category';
 
 const CategoryHome = ({ match }) => {
@@ -9,15 +10,47 @@ const CategoryHome = ({ match }) => {
 
   const { slug } = match.params;
 
+  console.log('Category ===> ', category);
+  console.log('Products ===> ', products);
+
   useEffect(() => {
     setLoading(true);
-    getCategory(slug).then(c => {
-      console.log(JSON.stringify(c.data, null, 4));
-      setCategory(c.data);
+    getCategory(slug).then(res => {
+      console.log(JSON.stringify(res.data, null, 4));
+      setCategory(res.data.category);
+      setProducts(res.data.products);
+      setLoading(false);
     });
   }, [slug]);
 
-  return <div>{slug}</div>;
+  return (
+    <div className="container-fluid">
+      <div className="row">
+        <div
+          className="col-md-12"
+          style={{ textAlign: 'center', marginTop: '30px' }}
+        >
+          {loading ? (
+            <h4 className="jumbotron" style={{ fontSize: '2rem' }}>
+              Loading...
+            </h4>
+          ) : (
+            <h4
+              className="jumbotron"
+              style={{ fontSize: '2rem' }}
+            >{`${products.length} products in "${category.name}" category`}</h4>
+          )}
+        </div>
+      </div>
+      <div className="row">
+        {products.map(p => (
+          <div className="col-md-4" key={p._id}>
+            <ProductCard product={p}/>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 };
 
 export default CategoryHome;
