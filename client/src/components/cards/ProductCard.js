@@ -9,7 +9,7 @@ const { Meta } = Card;
 
 const ProductCard = ({ product }) => {
   // Destructure the product object
-  const { images, title, description, slug } = product;
+  const { images, title, description, slug, price } = product;
 
   const addToCard = () => {
     //
@@ -56,6 +56,13 @@ const ProductCard = ({ product }) => {
           title={title}
           description={`${description && description.substring(0, 40)}...`}
         />
+
+        <p
+          style={{
+            marginTop: '10px',
+            fontWeight: 'bold',
+          }}
+        >{`US $${price}`}</p>
       </Card>
     </>
   );
