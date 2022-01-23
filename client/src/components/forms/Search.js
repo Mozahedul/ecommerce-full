@@ -31,7 +31,7 @@ const Search = () => {
         placeholder="Search"
         className="form-control"
       />
-      <SearchOutlined onClick={handleSubmit} style={{ cursor: 'pointe' }} />
+      <SearchOutlined onClick={handleSubmit} style={{ cursor: 'pointer' }} />
     </form>
   );
 };

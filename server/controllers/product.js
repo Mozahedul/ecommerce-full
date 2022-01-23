@@ -176,6 +176,7 @@ module.exports.listRelated = async (req, res) => {
   res.json(related);
 };
 
+// SEARCH / FILTER
 const handleQuery = async (req, res, query) => {
   const products = await Product.find({ $text: { $search: query } })
     .populate('category', '_id name')
@@ -183,9 +184,9 @@ const handleQuery = async (req, res, query) => {
     // .populate('postedBy', '_id name')
     .exec();
 
-  res.json({ products });
+  res.json(products);
 };
-// SEARCH / FILTER
+
 module.exports.searchFilter = async (req, res) => {
   const { query } = req.body;
   if (query) {
