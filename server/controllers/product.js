@@ -220,8 +220,40 @@ const handleCategory = async (req, res, category) => {
   }
 };
 
+const handleStars = async (req, res, stars) => {
+  // project aggregation in mongodb is used to group values from multiple documents
+
+  Product.aggregate([
+    {
+      $project: {
+        // $$ROOT provides the root document like product
+        document: '$$ROOT',
+        floorAverage: {
+          $floor: { $avg: '$rating.star' },
+        },
+      },
+    },
+
+    // $match operator filters documents that match a defined set of condition.
+    // proceed to matched documents to the next staged pipeline
+    { $match: { floorAverage: stars } },
+  ])
+    .limit(12)
+    .exec((err, aggregates) => {
+      if (err) console.log(err);
+      Product.find({ _id: aggregates })
+        .populate('category', '_id, name')
+        .populate('subs', '_id, name')
+        .populate('postedBy', '_id, name')
+        .exec((error, products) => {
+          if (error) console.log(error);
+          res.json(products);
+        });
+    });
+};
+
 module.exports.searchFilter = async (req, res) => {
-  const { query, price, category } = req.body;
+  const { query, price, category, stars } = req.body;
   if (query) {
     console.log('Query', query);
     await handleQuery(req, res, query);
@@ -233,8 +265,15 @@ module.exports.searchFilter = async (req, res) => {
     await handlePrice(req, res, price);
   }
 
+  // search with Category
   if (category) {
     console.log('Category', category);
     await handleCategory(req, res, category);
+  }
+
+  // search with star ratings
+  if (stars) {
+    console.log('Stars ==> ', stars);
+    await handleStars(req, res, stars);
   }
 };
