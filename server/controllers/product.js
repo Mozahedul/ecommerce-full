@@ -195,9 +195,9 @@ const handlePrice = async (req, res, price) => {
         $lte: price[1],
       },
     })
-      .populate('category', '_id, name')
-      .populate('subs', '_id, name')
-      // .populate('postedBy', '_id, name')
+      .populate('category', '_id name')
+      .populate('subs', '_id name')
+      // .populate('postedBy', '_id name')
       .exec();
 
     res.json(products);
@@ -209,9 +209,9 @@ const handlePrice = async (req, res, price) => {
 const handleCategory = async (req, res, category) => {
   try {
     const products = await Product.find({ category })
-      .populate('category', '_id, name')
-      .populate('subs', '_id, name')
-      // .populate('postedBy', '_id, name')
+      .populate('category', '_id name')
+      .populate('subs', '_id name')
+      // .populate('postedBy', '_id name')
       .exec();
 
     res.json(products);
@@ -229,7 +229,7 @@ const handleStars = async (req, res, stars) => {
         // $$ROOT provides the root document like product
         document: '$$ROOT',
         floorAverage: {
-          $floor: { $avg: '$rating.star' },
+          $floor: { $avg: '$ratings.star' },
         },
       },
     },
@@ -242,9 +242,9 @@ const handleStars = async (req, res, stars) => {
     .exec((err, aggregates) => {
       if (err) console.log(err);
       Product.find({ _id: aggregates })
-        .populate('category', '_id, name')
-        .populate('subs', '_id, name')
-        .populate('postedBy', '_id, name')
+        .populate('category', '_id name')
+        .populate('subs', '_id name')
+        // .populate('postedBy', '_id name')
         .exec((error, products) => {
           if (error) console.log(error);
           res.json(products);
@@ -252,8 +252,18 @@ const handleStars = async (req, res, stars) => {
     });
 };
 
+const handleSubs = async (req, res, subs) => {
+  const products = await Product.find({ subs })
+    .populate('category', '_id name')
+    .populate('subs', '_id name')
+    // .populate('postedBy', '_id name')
+    .exec();
+
+  res.json(products);
+};
+
 module.exports.searchFilter = async (req, res) => {
-  const { query, price, category, stars } = req.body;
+  const { query, price, category, stars, subs } = req.body;
   if (query) {
     console.log('Query', query);
     await handleQuery(req, res, query);
@@ -275,5 +285,11 @@ module.exports.searchFilter = async (req, res) => {
   if (stars) {
     console.log('Stars ==> ', stars);
     await handleStars(req, res, stars);
+  }
+
+  // Search with sub category
+  if (subs) {
+    console.log('subs  ==> ', subs);
+    await handleSubs(req, res, subs);
   }
 };
