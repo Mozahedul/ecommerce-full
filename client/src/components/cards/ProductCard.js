@@ -36,6 +36,7 @@ const ProductCard = ({ product }) => {
             alt={title}
             style={{ height: '150px', objectFit: 'cover' }}
             className="p-1"
+            title={title}
           />
         }
         actions={[

@@ -252,8 +252,8 @@ const handleStars = async (req, res, stars) => {
     });
 };
 
-const handleSubs = async (req, res, subs) => {
-  const products = await Product.find({ subs })
+const handleSub = async (req, res, sub) => {
+  const products = await Product.find({ subs: sub })
     .populate('category', '_id name')
     .populate('subs', '_id name')
     // .populate('postedBy', '_id name')
@@ -262,8 +262,39 @@ const handleSubs = async (req, res, subs) => {
   res.json(products);
 };
 
+const handleShipping = async (req, res, shipping) => {
+  const products = await Product.find({ shipping })
+    .populate('category', '_id name')
+    .populate('subs', '_id name')
+    // .populate('postedBy', '_id, name')
+    .exec();
+
+  res.json(products);
+};
+
+const handleColor = async (req, res, color) => {
+  const products = await Product.find({ color })
+    .populate('category', '_id name')
+    .populate('subs', '_id name')
+    // .populate('postedBy', '_id name')
+    .exec();
+
+  res.json(products);
+};
+
+const handleBrand = async (req, res, brand) => {
+  const products = await Product.find({ brand })
+    .populate('category', '_id name')
+    .populate('subs', '_id name')
+    .populate('postedBy', '_id name')
+    .exec();
+
+  res.json(products);
+};
+
 module.exports.searchFilter = async (req, res) => {
-  const { query, price, category, stars, subs } = req.body;
+  const { query, price, category, stars, sub, shipping, color, brand } =
+    req.body;
   if (query) {
     console.log('Query', query);
     await handleQuery(req, res, query);
@@ -287,9 +318,27 @@ module.exports.searchFilter = async (req, res) => {
     await handleStars(req, res, stars);
   }
 
-  // Search with sub category
-  if (subs) {
-    console.log('subs  ==> ', subs);
-    await handleSubs(req, res, subs);
+  // Search products with sub category
+  if (sub) {
+    console.log('sub  ==> ', sub);
+    await handleSub(req, res, sub);
+  }
+
+  // Search products with Shipping
+  if (shipping) {
+    console.log('Shipping ==> ', shipping);
+    await handleShipping(req, res, shipping);
+  }
+
+  // Search products with color
+  if (color) {
+    console.log('Color ==> ', color);
+    handleColor(req, res, color);
+  }
+
+  // Search products with brand
+  if (brand) {
+    console.log('Brand ==> ', brand);
+    handleBrand(req, res, brand);
   }
 };

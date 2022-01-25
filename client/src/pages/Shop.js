@@ -1,20 +1,20 @@
-import React, { useState } from 'react';
-import { useEffect } from 'react';
-import {
-  fetchProductsByFilter,
-  getProductsByCount,
-} from '../functions/product';
-import ProductCard from '../components/cards/ProductCard';
-import { useSelector } from 'react-redux';
-import { Menu, Slider, Checkbox } from 'antd';
 import {
   DollarOutlined,
   DownSquareOutlined,
   StarOutlined,
 } from '@ant-design/icons';
-import { useDispatch } from 'react-redux';
-import { getCategories } from '../functions/category';
+import { Checkbox, Menu, Slider } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import ProductCard from '../components/cards/ProductCard';
 import Star from '../components/forms/Star';
+import { getCategories } from '../functions/category';
+import { getSubs } from '../functions/sub';
+import {
+  fetchProductsByFilter,
+  getProductsByCount,
+} from '../functions/product';
+import { Badge } from 'react-bootstrap';
 
 const { SubMenu } = Menu;
 
@@ -25,6 +25,8 @@ const Shop = () => {
   const [ok, setOk] = useState(false);
   const [categories, setCategories] = useState([]);
   const [categoryIds, setCategoryIds] = useState([]);
+  const [subs, setSubs] = useState([]);
+  const [sub, setSub] = useState('');
   const [star, setStar] = useState('');
 
   console.log('Categories ===> ', categories);
@@ -40,6 +42,9 @@ const Shop = () => {
     loadAllProducts();
     // fetch categories
     getCategories().then(res => setCategories(res.data));
+
+    // fetch subcategories
+    getSubs().then(res => setSubs(res.data));
   }, []);
 
   const fetchProducts = arg => {
@@ -76,6 +81,7 @@ const Shop = () => {
     setPrice(value);
     setCategoryIds([]);
     setStar('');
+    setSub('');
     setTimeout(() => {
       setOk(!ok);
     }, 300);
@@ -107,6 +113,7 @@ const Shop = () => {
 
     setPrice([0, 0]);
     setStar('');
+    setSub('');
     // console.log(e.target.value);
     const inTheState = [...categoryIds];
     const justChecked = e.target.value;
@@ -134,7 +141,33 @@ const Shop = () => {
     setPrice([0, 0]);
     setCategoryIds([]);
     setStar(num);
+    setSub('');
     fetchProducts({ stars: num });
+  };
+
+  // Show products by sub categories
+  const showSubs = () =>
+    subs.map(s => (
+      <Badge
+        key={s._id}
+        onClick={() => handleSub(s)}
+        bg="secondary"
+        style={{ padding: '5px 8px', margin: '3px', cursor: 'pointer' }}
+      >
+        {s.name}
+      </Badge>
+    ));
+
+  const handleSub = sub => {
+    setSub(sub);
+    dispatch({
+      type: 'QUERY_SEARCH',
+      payload: { text: '' },
+    });
+    setPrice([0, 0]);
+    setCategoryIds([]);
+    setStar('');
+    fetchProducts({ sub });
   };
 
   const showStars = () => (
@@ -156,7 +189,7 @@ const Shop = () => {
       <div className="row" style={{ marginTop: '30px' }}>
         <div className="col-md-3">
           <h4>Search/Filter</h4>
-          <Menu defaultOpenKeys={['1', '2', '3']} mode="inline">
+          <Menu defaultOpenKeys={['1', '2', '3', '4']} mode="inline">
             {/* price */}
             <SubMenu
               key="1"
@@ -202,6 +235,18 @@ const Shop = () => {
               }
             >
               <div style={{ padding: '12px 0 12px 24px' }}>{showStars()}</div>
+            </SubMenu>
+
+            {/* sub category */}
+            <SubMenu
+              key="4"
+              title={
+                <h6>
+                  <DownSquareOutlined /> Sub Categories
+                </h6>
+              }
+            >
+              <div style={{ padding: '12px 0 12px 24px' }}>{showSubs()}</div>
             </SubMenu>
           </Menu>
         </div>
