@@ -286,7 +286,7 @@ const handleBrand = async (req, res, brand) => {
   const products = await Product.find({ brand })
     .populate('category', '_id name')
     .populate('subs', '_id name')
-    .populate('postedBy', '_id name')
+    // .populate('postedBy', '_id name')
     .exec();
 
   res.json(products);

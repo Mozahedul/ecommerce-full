@@ -3,7 +3,7 @@ import {
   DownSquareOutlined,
   StarOutlined,
 } from '@ant-design/icons';
-import { Checkbox, Menu, Slider } from 'antd';
+import { Checkbox, Menu, Radio, Slider, Space } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ProductCard from '../components/cards/ProductCard';
@@ -28,9 +28,19 @@ const Shop = () => {
   const [subs, setSubs] = useState([]);
   const [sub, setSub] = useState('');
   const [star, setStar] = useState('');
+  const [brands, setBrands] = useState([
+    'Apple',
+    'Samsung',
+    'Microsoft',
+    'Lenovo',
+    'ASUS',
+  ]);
+  const [brand, setBrand] = useState('');
 
   console.log('Categories ===> ', categories);
   console.log('Start ==> ', star);
+  console.log('Brands', brands);
+  console.log('Brand', brand);
 
   const dispatch = useDispatch();
 
@@ -82,6 +92,7 @@ const Shop = () => {
     setCategoryIds([]);
     setStar('');
     setSub('');
+    setBrand('');
     setTimeout(() => {
       setOk(!ok);
     }, 300);
@@ -114,6 +125,7 @@ const Shop = () => {
     setPrice([0, 0]);
     setStar('');
     setSub('');
+    setBrand('');
     // console.log(e.target.value);
     const inTheState = [...categoryIds];
     const justChecked = e.target.value;
@@ -142,10 +154,11 @@ const Shop = () => {
     setCategoryIds([]);
     setStar(num);
     setSub('');
+    setBrand('');
     fetchProducts({ stars: num });
   };
 
-  // Show products by sub categories
+  // 6. Show products by sub categories
   const showSubs = () =>
     subs.map(s => (
       <Badge
@@ -167,9 +180,11 @@ const Shop = () => {
     setPrice([0, 0]);
     setCategoryIds([]);
     setStar('');
+    setBrand('');
     fetchProducts({ sub });
   };
 
+  // 7. show products with star ratings
   const showStars = () => (
     <div>
       <Star starClick={handleStarClick} numberOfStars={5} />
@@ -184,12 +199,44 @@ const Shop = () => {
     </div>
   );
 
+  // show products based on brand name
+  const showBrands = () =>
+    brands.map(b => (
+      <>
+        <Radio
+          value={b}
+          name={b}
+          checked={b === brand}
+          onChange={handleBrand}
+          style={{ paddingBottom: '5px' }}
+        >
+          {b}
+        </Radio>
+        <br />
+      </>
+    ));
+
+  const handleBrand = e => {
+    dispatch({
+      type: 'SEARCH_QUERY',
+      payload: { text: '' },
+    });
+    setPrice([0, 0]);
+    setCategoryIds([]);
+    setStar('');
+    setBrand(e.target.value);
+    fetchProducts({ brand: e.target.value });
+  };
+
   return (
     <div className="container-fluid">
       <div className="row" style={{ marginTop: '30px' }}>
         <div className="col-md-3">
           <h4>Search/Filter</h4>
-          <Menu defaultOpenKeys={['1', '2', '3', '4']} mode="inline">
+          <Menu
+            defaultOpenKeys={['1', '2', '3', '4', '5', '6', '7']}
+            mode="inline"
+          >
             {/* price */}
             <SubMenu
               key="1"
@@ -247,6 +294,18 @@ const Shop = () => {
               }
             >
               <div style={{ padding: '12px 0 12px 24px' }}>{showSubs()}</div>
+            </SubMenu>
+
+            {/* brands */}
+            <SubMenu
+              key="5"
+              title={
+                <h6>
+                  <DownSquareOutlined /> Brands
+                </h6>
+              }
+            >
+              <div style={{ padding: '10px 0 10px 24px' }}>{showBrands()}</div>
             </SubMenu>
           </Menu>
         </div>
