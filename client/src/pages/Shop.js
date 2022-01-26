@@ -36,6 +36,14 @@ const Shop = () => {
     'ASUS',
   ]);
   const [brand, setBrand] = useState('');
+  const [colors, setColors] = useState([
+    'Black',
+    'Brown',
+    'Silver',
+    'White',
+    'Blue',
+  ]);
+  const [color, setColor] = useState('');
 
   console.log('Categories ===> ', categories);
   console.log('Start ==> ', star);
@@ -93,6 +101,7 @@ const Shop = () => {
     setStar('');
     setSub('');
     setBrand('');
+    setColor('');
     setTimeout(() => {
       setOk(!ok);
     }, 300);
@@ -126,6 +135,7 @@ const Shop = () => {
     setStar('');
     setSub('');
     setBrand('');
+    setColor('');
     // console.log(e.target.value);
     const inTheState = [...categoryIds];
     const justChecked = e.target.value;
@@ -155,6 +165,7 @@ const Shop = () => {
     setStar(num);
     setSub('');
     setBrand('');
+    setColor('');
     fetchProducts({ stars: num });
   };
 
@@ -181,6 +192,7 @@ const Shop = () => {
     setCategoryIds([]);
     setStar('');
     setBrand('');
+    setColor('');
     fetchProducts({ sub });
   };
 
@@ -224,8 +236,41 @@ const Shop = () => {
     setPrice([0, 0]);
     setCategoryIds([]);
     setStar('');
+    setSub('');
+    setColor('');
     setBrand(e.target.value);
     fetchProducts({ brand: e.target.value });
+  };
+
+  // 8. Show products with colors
+  const showColors = () =>
+    colors.map(c => (
+      <>
+        <Radio
+          value={c}
+          name={c}
+          checked={c === color}
+          onChange={handleColor}
+          style={{ paddingBottom: '5px' }}
+        >
+          {c}
+        </Radio>
+        <br />
+      </>
+    ));
+
+  const handleColor = e => {
+    dispatch({
+      type: 'QUERY_SEARCH',
+      payload: { text: '' },
+    });
+    setPrice([0, 0]);
+    setCategoryIds('');
+    setSub('');
+    setStar('');
+    setBrand('');
+    setColor(e.target.value);
+    fetchProducts({ color: e.target.value });
   };
 
   return (
@@ -306,6 +351,18 @@ const Shop = () => {
               }
             >
               <div style={{ padding: '10px 0 10px 24px' }}>{showBrands()}</div>
+            </SubMenu>
+
+            {/* colors */}
+            <SubMenu
+              key="6"
+              title={
+                <h6>
+                  <DownSquareOutlined /> Colors
+                </h6>
+              }
+            >
+              <div style={{ padding: '10px 0 10px 24px' }}>{showColors()}</div>
             </SubMenu>
           </Menu>
         </div>
