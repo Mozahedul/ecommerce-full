@@ -44,11 +44,17 @@ const Shop = () => {
     'Blue',
   ]);
   const [color, setColor] = useState('');
+  const [shippings, setShippings] = useState(['Yes', 'No']);
+  const [shipping, setShipping] = useState('');
 
-  console.log('Categories ===> ', categories);
-  console.log('Start ==> ', star);
-  console.log('Brands', brands);
-  console.log('Brand', brand);
+  // console.log('Categories ===> ', categories);
+  // console.log('Start ==> ', star);
+  // console.log('Brands', brands);
+  // console.log('Brand', brand);
+
+  console.log('Shipping ===> ', shipping);
+
+  console.log('Products from shipping', products);
 
   const dispatch = useDispatch();
 
@@ -79,6 +85,15 @@ const Shop = () => {
 
   // 2. Load products on user search input
   useEffect(() => {
+    if (text) {
+      setPrice([0, 0]);
+      setCategoryIds('');
+      setStar('');
+      setBrand('');
+      setSub('');
+      setColor('');
+      setShipping('');
+    }
     const delayed = setTimeout(() => {
       fetchProducts({ query: text });
     }, 300);
@@ -102,6 +117,7 @@ const Shop = () => {
     setSub('');
     setBrand('');
     setColor('');
+    setShipping('');
     setTimeout(() => {
       setOk(!ok);
     }, 300);
@@ -136,6 +152,7 @@ const Shop = () => {
     setSub('');
     setBrand('');
     setColor('');
+    setShipping('');
     // console.log(e.target.value);
     const inTheState = [...categoryIds];
     const justChecked = e.target.value;
@@ -166,6 +183,7 @@ const Shop = () => {
     setSub('');
     setBrand('');
     setColor('');
+    setShipping('');
     fetchProducts({ stars: num });
   };
 
@@ -183,9 +201,8 @@ const Shop = () => {
     ));
 
   const handleSub = sub => {
-    setSub(sub);
     dispatch({
-      type: 'QUERY_SEARCH',
+      type: 'SEARCH_QUERY',
       payload: { text: '' },
     });
     setPrice([0, 0]);
@@ -193,6 +210,8 @@ const Shop = () => {
     setStar('');
     setBrand('');
     setColor('');
+    setShipping('');
+    setSub(sub);
     fetchProducts({ sub });
   };
 
@@ -238,6 +257,7 @@ const Shop = () => {
     setStar('');
     setSub('');
     setColor('');
+    setShipping('');
     setBrand(e.target.value);
     fetchProducts({ brand: e.target.value });
   };
@@ -269,10 +289,42 @@ const Shop = () => {
     setSub('');
     setStar('');
     setBrand('');
+    setShipping('');
     setColor(e.target.value);
     fetchProducts({ color: e.target.value });
   };
 
+  // 9. show products with shipping
+  const showShipping = () =>
+    shippings.map(sh => (
+      <>
+        <Checkbox
+          value={sh}
+          name={sh}
+          onChange={handleShoppingChange}
+          checked={sh === shipping}
+          style={{ paddingBottom: '8px' }}
+        >
+          {sh}
+        </Checkbox>
+        <br />
+      </>
+    ));
+
+  const handleShoppingChange = e => {
+    dispatch({
+      type: 'QUERY_SEARCH',
+      payload: { text: '' },
+    });
+    setSub('');
+    setCategoryIds('');
+    setPrice([0, 0]);
+    setBrand('');
+    setStar('');
+    setColor('');
+    setShipping(e.target.value);
+    fetchProducts({ shipping: e.target.value });
+  };
   return (
     <div className="container-fluid">
       <div className="row" style={{ marginTop: '30px' }}>
@@ -363,6 +415,20 @@ const Shop = () => {
               }
             >
               <div style={{ padding: '10px 0 10px 24px' }}>{showColors()}</div>
+            </SubMenu>
+
+            {/* colors */}
+            <SubMenu
+              key="7"
+              title={
+                <h6>
+                  <DownSquareOutlined /> Shipping
+                </h6>
+              }
+            >
+              <div style={{ padding: '10px 0 10px 24px' }}>
+                {showShipping()}
+              </div>
             </SubMenu>
           </Menu>
         </div>
