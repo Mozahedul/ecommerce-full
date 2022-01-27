@@ -1,10 +1,12 @@
 import { HeartOutlined, ShoppingCartOutlined } from '@ant-design/icons';
-import { Card, Tabs } from 'antd';
-import React from 'react';
+import { Card, Tabs, Tooltip } from 'antd';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { Link } from 'react-router-dom';
 import StarRatings from 'react-star-ratings';
+import { addToCart } from '../../functions/addToCart';
 import { showAverage } from '../../functions/rating';
 import Laptop from '../../images/laptop.jpg';
 import RatingModal from '../modal/RatingModal';
@@ -15,6 +17,13 @@ const { TabPane } = Tabs;
 // This is children component of Product component
 const SingleProduct = ({ product, onStarClick, star }) => {
   const { _id, title, images, description } = product;
+  const [tooltip, setTooltip] = useState('Click to add');
+  // redux
+  const dispatch = useDispatch();
+
+  const handleAddToCart = () => {
+    addToCart(product, setTooltip, dispatch);
+  };
   return (
     <>
       <div className="col-md-7">
@@ -59,11 +68,13 @@ const SingleProduct = ({ product, onStarClick, star }) => {
         )}
         <Card
           actions={[
-            <>
-              <ShoppingCartOutlined className="text-success" />
-              <br />
-              Add to Cart
-            </>,
+            <Tooltip title={tooltip}>
+              <div onClick={handleAddToCart}>
+                <ShoppingCartOutlined className="text-success" />
+                <br />
+                Add to Cart
+              </div>
+            </Tooltip>,
             <Link to="/">
               <HeartOutlined className="text-info" /> <br />
               Add to Wishlist

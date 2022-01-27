@@ -1,38 +1,24 @@
 import { EyeOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import { Card, Tooltip } from 'antd';
-import _ from 'lodash';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { showAverage } from '../../functions/rating';
 import laptop from '../../images/laptop.jpg';
+import { addToCart } from '../../functions/addToCart';
+import { useDispatch, useSelector } from 'react-redux';
 
 const { Meta } = Card;
 
 const ProductCard = ({ product }) => {
   const [tooltip, setTooltip] = useState('Click to add');
+  const dispatch = useDispatch();
   // Destructure the product object
   const { images, title, description, slug, price } = product;
 
+  const { user, cart } = useSelector(state => ({ ...state }));
+
   const handleAddToCart = () => {
-    // Create cart array
-    let cart = [];
-    if (typeof window !== 'undefined') {
-      // if cart is in local storage GET it
-      if (localStorage.getItem('cart')) {
-        cart = JSON.parse(localStorage.getItem('cart'));
-      }
-      // push new product to cart
-      cart.push({
-        ...product,
-        count: 1,
-      });
-
-      let unique = _.uniqWith(cart, _.isEqual);
-      localStorage.setItem('cart', JSON.stringify(unique));
-    }
-    setTooltip('Added');
-
-    console.log(cart);
+   addToCart(product, setTooltip, dispatch)
   };
 
   return (

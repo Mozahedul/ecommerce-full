@@ -2,11 +2,12 @@ import {
   AppstoreOutlined,
   LogoutOutlined,
   SettingOutlined,
+  ShoppingCartOutlined,
   ShoppingOutlined,
   UserAddOutlined,
   UserOutlined,
 } from '@ant-design/icons';
-import { Menu } from 'antd';
+import { Badge, Menu } from 'antd';
 import firebase from 'firebase/compat/app';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -20,6 +21,7 @@ const Header = () => {
   const { user } = useSelector(state => state);
   const history = useHistory();
   const [current, setCurrent] = useState('home');
+  const { cart } = useSelector(state => ({ ...state }));
 
   console.log('From user:', JSON.stringify(user && user.email));
 
@@ -45,12 +47,21 @@ const Header = () => {
     >
       <Menu.ItemGroup>
         <Item key="home" icon={<AppstoreOutlined />}>
-          <Link to="/"> Home </Link>
+          <Link to="/">Home </Link>
         </Item>
       </Menu.ItemGroup>
       <Menu.ItemGroup>
         <Item key="shop" icon={<ShoppingOutlined />}>
-          <Link to="/shop"> Shop </Link>
+          <Link to="/shop">Shop </Link>
+        </Item>
+      </Menu.ItemGroup>
+      <Menu.ItemGroup>
+        <Item key="shop" icon={<ShoppingCartOutlined />}>
+          <Link to="/cart" style={{ paddingTop: '2px' }}>
+            <Badge count={cart.length} offset={[9, 0]}>
+              Cart
+            </Badge>
+          </Link>
         </Item>
       </Menu.ItemGroup>
 
