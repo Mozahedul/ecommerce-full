@@ -3,6 +3,12 @@ import ModalImage from 'react-modal-image';
 import laptop from '../../images/laptop.jpg';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
+import {
+  CheckCircleOutlined,
+  CloseCircleOutlined,
+  CloseOutlined,
+} from '@ant-design/icons';
 
 const ProductCartInCheckout = ({ p }) => {
   const colors = ['Black', 'Brown', 'Silver', 'White', 'Blue'];
@@ -62,10 +68,32 @@ const ProductCartInCheckout = ({ p }) => {
       });
     }
   };
+
+  const handleRemove = () => {
+    let cart = [];
+
+    if (typeof window !== 'undefined') {
+      if (localStorage.getItem('cart')) {
+        cart = JSON.parse(localStorage.getItem('cart'));
+      }
+      cart.map((product, i) => {
+        if (product._id === p._id) {
+          cart.splice(i, 1);
+        }
+        return cart;
+      });
+      localStorage.setItem('cart', JSON.stringify(cart));
+      dispatch({
+        type: 'ADD_TO_CART',
+        payload: cart,
+      });
+    }
+  };
+
   return (
     <tbody>
       <tr>
-        <td>
+        <td className="text-center">
           <div style={{ width: '80px', height: 'auto' }}>
             {p.images.length ? (
               <ModalImage small={p.images[0].url} large={p.images[0].url} />
@@ -74,10 +102,14 @@ const ProductCartInCheckout = ({ p }) => {
             )}
           </div>
         </td>
-        <td>{p.title}</td>
-        <td>${p.price}</td>
-        <td>{p.brand}</td>
-        <td>
+        <td className="text-center">
+          <Link to={`/product/${p.slug}`} style={{ textDecoration: 'none' }}>
+            {p.title}
+          </Link>
+        </td>
+        <td className="text-center">${p.price}</td>
+        <td className="text-center">{p.brand}</td>
+        <td className="text-center">
           <select
             name="color"
             className="form-control"
@@ -105,8 +137,19 @@ const ProductCartInCheckout = ({ p }) => {
             className="form-control"
           />
         </td>
-        <td>Shipping Icon</td>
-        <td>Delete Icon</td>
+        <td className="text-center">
+          {p.shipping === 'Yes' ? (
+            <CheckCircleOutlined className="text-success" />
+          ) : (
+            <CloseCircleOutlined className="text-danger" />
+          )}
+        </td>
+        <td className="text-center">
+          <CloseOutlined
+            onClick={handleRemove}
+            className="text-danger pointer"
+          />
+        </td>
       </tr>
     </tbody>
   );
