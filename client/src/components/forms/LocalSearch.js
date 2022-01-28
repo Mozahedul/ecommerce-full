@@ -3,7 +3,6 @@ import React from 'react';
 const LocalSearch = ({ keyword, setKeyword }) => {
   // Step 3
   const handleSearchChange = e => {
-    e.preventDefault();
     setKeyword(e.target.value.toLowerCase());
   };
   return (

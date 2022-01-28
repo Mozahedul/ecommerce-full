@@ -3,7 +3,7 @@ import {
   DownSquareOutlined,
   StarOutlined,
 } from '@ant-design/icons';
-import { Checkbox, Menu, Radio, Slider, Space } from 'antd';
+import { Checkbox, Menu, Radio, Slider } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ProductCard from '../components/cards/ProductCard';
@@ -60,16 +60,6 @@ const Shop = () => {
 
   const { search } = useSelector(state => ({ ...state }));
   const { text } = search;
-
-  useEffect(() => {
-    setLoading(true);
-    loadAllProducts();
-    // fetch categories
-    getCategories().then(res => setCategories(res.data));
-
-    // fetch subcategories
-    getSubs().then(res => setSubs(res.data));
-  }, []);
 
   const fetchProducts = arg => {
     fetchProductsByFilter(arg).then(res => {
@@ -235,7 +225,7 @@ const Shop = () => {
     brands.map((b, i) => (
       <>
         <Radio
-          key={i + 1}
+          key={i}
           value={b}
           name={b}
           checked={b === brand}
@@ -268,7 +258,7 @@ const Shop = () => {
     colors.map((c, i) => (
       <>
         <Radio
-          key={i + 1}
+          key={i}
           value={c}
           name={c}
           checked={c === color}
@@ -283,7 +273,7 @@ const Shop = () => {
 
   const handleColor = e => {
     dispatch({
-      type: 'QUERY_SEARCH',
+      type: 'SEARCH_QUERY',
       payload: { text: '' },
     });
     setPrice([0, 0]);
@@ -301,7 +291,7 @@ const Shop = () => {
     shippings.map((sh, i) => (
       <>
         <Checkbox
-          key={i + 1}
+          key={i}
           value={sh}
           name={sh}
           onChange={handleShoppingChange}
@@ -316,7 +306,7 @@ const Shop = () => {
 
   const handleShoppingChange = e => {
     dispatch({
-      type: 'QUERY_SEARCH',
+      type: 'SEARCH_QUERY',
       payload: { text: '' },
     });
     setSub('');
@@ -328,6 +318,17 @@ const Shop = () => {
     setShipping(e.target.value);
     fetchProducts({ shipping: e.target.value });
   };
+
+  useEffect(() => {
+    setLoading(true);
+    loadAllProducts();
+    // fetch categories
+    getCategories().then(res => setCategories(res.data));
+
+    // fetch subcategories
+    getSubs().then(res => setSubs(res.data));
+  }, []);
+
   return (
     <div className="container-fluid">
       <div className="row" style={{ marginTop: '30px' }}>
@@ -438,23 +439,25 @@ const Shop = () => {
         <div className="col-md-9">
           {loading ? (
             <h4 className="text-danger">Loading...</h4>
+          ) : products.length < 1 ? (
+            <p>No products found</p>
           ) : (
-            <h4 className="text-danger">Products</h4>
+            <>
+              <h4 className="text-danger">Products</h4>
+              <div className="row">
+                {products.map(p => (
+                  <div
+                    key={p._id}
+                    className="col-md-4"
+                    style={{ marginBottom: '15px' }}
+                  >
+                    <ProductCard product={p} />
+                  </div>
+                ))}
+              </div>
+            </>
           )}
           <hr />
-          {products.length < 1 && <p>No products found</p>}
-
-          <div className="row">
-            {products.map(p => (
-              <div
-                key={p._id}
-                className="col-md-4"
-                style={{ marginBottom: '15px' }}
-              >
-                <ProductCard product={p} />
-              </div>
-            ))}
-          </div>
         </div>
       </div>
     </div>

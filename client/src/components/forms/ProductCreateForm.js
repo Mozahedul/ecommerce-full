@@ -16,12 +16,10 @@ const ProductCreateForm = ({
     title,
     description,
     price,
-    category,
     categories,
     subs,
     shipping,
     quantity,
-    images,
     colors,
     brands,
     color,
@@ -103,8 +101,8 @@ const ProductCreateForm = ({
           onChange={handleChange}
         >
           <option>Please select</option>
-          {colors.map(color => (
-            <option key={color} value={color}>
+          {colors.map((color, i) => (
+            <option key={i} value={color}>
               {color}
             </option>
           ))}
@@ -121,8 +119,8 @@ const ProductCreateForm = ({
           onChange={handleChange}
         >
           <option>Please select</option>
-          {brands.map(brand => (
-            <option key={brand} value={brand}>
+          {brands.map((brand, i) => (
+            <option key={i} value={brand}>
               {brand}
             </option>
           ))}

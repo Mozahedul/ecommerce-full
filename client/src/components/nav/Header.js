@@ -23,7 +23,7 @@ const Header = () => {
   const [current, setCurrent] = useState('home');
   const { cart } = useSelector(state => ({ ...state }));
 
-  console.log('From user:', JSON.stringify(user && user.email));
+  // console.log('From user:', JSON.stringify(user && user.email));
 
   const handleClick = e => {
     setCurrent(e.key);
@@ -50,13 +50,15 @@ const Header = () => {
           <Link to="/">Home </Link>
         </Item>
       </Menu.ItemGroup>
+
       <Menu.ItemGroup>
         <Item key="shop" icon={<ShoppingOutlined />}>
           <Link to="/shop">Shop </Link>
         </Item>
       </Menu.ItemGroup>
+
       <Menu.ItemGroup>
-        <Item key="shop" icon={<ShoppingCartOutlined />}>
+        <Item key="cart" icon={<ShoppingCartOutlined />}>
           <Link to="/cart" style={{ paddingTop: '2px' }}>
             <Badge count={cart.length} offset={[9, 0]}>
               Cart

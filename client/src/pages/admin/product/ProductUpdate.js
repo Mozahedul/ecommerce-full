@@ -94,7 +94,6 @@ const ProductUpdate = ({ match, history }) => {
   };
 
   const handleCategoryChange = e => {
-    e.preventDefault();
     console.log('CATEGORY CLICKED ===> ', e.target.value);
     setValues({ ...values, subs: [] });
 

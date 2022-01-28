@@ -42,7 +42,7 @@ const App = () => {
         // getIdTokenResult() is a method can be be used
         // to access the protected routes from backend
         const idTokenResult = await user.getIdTokenResult();
-        console.log('User', user);
+        // console.log('User', user);
         currentUser(idTokenResult.token)
           .then(res => {
             dispatch({

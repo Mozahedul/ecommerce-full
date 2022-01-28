@@ -1,11 +1,11 @@
 import { EyeOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import { Card, Tooltip } from 'antd';
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { addToCart } from '../../functions/addToCart';
 import { showAverage } from '../../functions/rating';
 import laptop from '../../images/laptop.jpg';
-import { addToCart } from '../../functions/addToCart';
-import { useDispatch, useSelector } from 'react-redux';
 
 const { Meta } = Card;
 
@@ -15,10 +15,10 @@ const ProductCard = ({ product }) => {
   // Destructure the product object
   const { images, title, description, slug, price } = product;
 
-  const { user, cart } = useSelector(state => ({ ...state }));
+  // const { user, cart } = useSelector(state => ({ ...state }));
 
   const handleAddToCart = () => {
-   addToCart(product, setTooltip, dispatch)
+    addToCart(product, setTooltip, dispatch);
   };
 
   return (

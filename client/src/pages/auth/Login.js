@@ -79,7 +79,6 @@ const Login = ({ history }) => {
   };
 
   const googleLogin = async e => {
-    e.preventDefault();
     auth
       .signInWithPopup(googleAuthProvider)
       .then(async result => {
