@@ -25,5 +25,8 @@
     "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "prettier": "^2.5.1"
+  },
+  "dependencies": {
+    "react-modal-image": "^2.5.0"
   }
 }
