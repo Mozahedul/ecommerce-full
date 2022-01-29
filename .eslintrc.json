@@ -54,6 +54,8 @@
     "import/no-dynamic-require": "off",
     "global-require": "off",
     "prefer-template": "off",
-    "react-hooks/exhaustive-deps": "off"
+    "react-hooks/exhaustive-deps": "off",
+    "no-await-in-loop": "off",
+    "no-plusplus": "off"
   }
 }
