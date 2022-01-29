@@ -91,67 +91,62 @@ const ProductCartInCheckout = ({ p }) => {
   };
 
   return (
-    <tbody>
-      <tr>
-        <td className="text-center">
-          <div style={{ width: '80px', height: 'auto' }}>
-            {p.images.length ? (
-              <ModalImage small={p.images[0].url} large={p.images[0].url} />
-            ) : (
-              <ModalImage small={laptop} large={laptop} />
-            )}
-          </div>
-        </td>
-        <td className="text-center">
-          <Link to={`/product/${p.slug}`} style={{ textDecoration: 'none' }}>
-            {p.title}
-          </Link>
-        </td>
-        <td className="text-center">${p.price}</td>
-        <td className="text-center">{p.brand}</td>
-        <td className="text-center">
-          <select
-            name="color"
-            className="form-control"
-            onChange={handleColorChange}
-          >
-            {p.color ? (
-              <option value={p.color}>{p.color}</option>
-            ) : (
-              <option>Select</option>
-            )}
-            {colors
-              .filter(c => c !== p.color)
-              .map((c, i) => (
-                <option key={i} value={c}>
-                  {c}
-                </option>
-              ))}
-          </select>
-        </td>
-        <td className="text-center">
-          <input
-            type="number"
-            value={p.count}
-            onChange={handleQuantityChange}
-            className="form-control"
-          />
-        </td>
-        <td className="text-center">
-          {p.shipping === 'Yes' ? (
-            <CheckCircleOutlined className="text-success" />
+    <tr>
+      <td className="text-center">
+        <div style={{ width: '80px', height: 'auto' }}>
+          {p.images.length ? (
+            <ModalImage small={p.images[0].url} large={p.images[0].url} />
           ) : (
-            <CloseCircleOutlined className="text-danger" />
+            <ModalImage small={laptop} large={laptop} />
           )}
-        </td>
-        <td className="text-center">
-          <CloseOutlined
-            onClick={handleRemove}
-            className="text-danger pointer"
-          />
-        </td>
-      </tr>
-    </tbody>
+        </div>
+      </td>
+      <td className="text-center">
+        <Link to={`/product/${p.slug}`} style={{ textDecoration: 'none' }}>
+          {p.title}
+        </Link>
+      </td>
+      <td className="text-center">${p.price}</td>
+      <td className="text-center">{p.brand}</td>
+      <td className="text-center">
+        <select
+          name="color"
+          className="form-control"
+          onChange={handleColorChange}
+        >
+          {p.color ? (
+            <option value={p.color}>{p.color}</option>
+          ) : (
+            <option>Select</option>
+          )}
+          {colors
+            .filter(c => c !== p.color)
+            .map((c, i) => (
+              <option key={i} value={c}>
+                {c}
+              </option>
+            ))}
+        </select>
+      </td>
+      <td className="text-center">
+        <input
+          type="number"
+          value={p.count}
+          onChange={handleQuantityChange}
+          className="form-control"
+        />
+      </td>
+      <td className="text-center">
+        {p.shipping === 'Yes' ? (
+          <CheckCircleOutlined className="text-success" />
+        ) : (
+          <CloseCircleOutlined className="text-danger" />
+        )}
+      </td>
+      <td className="text-center">
+        <CloseOutlined onClick={handleRemove} className="text-danger pointer" />
+      </td>
+    </tr>
   );
 };
 

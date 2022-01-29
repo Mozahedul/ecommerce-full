@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import ProductCartInCheckout from '../components/cards/ProductCartInCheckout';
 
-const Cart = () => {
+const Cart = ({ history }) => {
   const { cart, user } = useSelector(state => ({ ...state }));
 
   const getTotal = () =>
@@ -14,7 +14,8 @@ const Cart = () => {
     );
 
   const saveOrderToDb = () => {
-    //
+    alert('Click to checkout page');
+    history.push('/checkout');
   };
 
   const showCartItems = () => (
@@ -31,10 +32,11 @@ const Cart = () => {
           <th className="col">Remove</th>
         </tr>
       </thead>
-
-      {cart.map(p => (
-        <ProductCartInCheckout key={p._id} p={p} />
-      ))}
+      <tbody>
+        {cart.map(p => (
+          <ProductCartInCheckout key={p._id} p={p} />
+        ))}
+      </tbody>
     </table>
   );
 
