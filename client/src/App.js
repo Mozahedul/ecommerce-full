@@ -30,6 +30,7 @@ import CategoryHome from './pages/category/CategoryHome';
 import SubHome from './pages/sub/SubHome';
 import Shop from './pages/Shop';
 import Cart from './pages/Cart';
+import SideDrawer from './components/drawer/SideDrawer';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -69,6 +70,7 @@ const App = () => {
     <>
       <Router>
         <Header />
+        <SideDrawer />
         <ToastContainer />
         <Switch>
           <AdminRoute
