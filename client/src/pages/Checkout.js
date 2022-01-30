@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getUserCart } from '../functions/user';
+import { emptyUserCart, getUserCart } from '../functions/user';
+import { toast } from 'react-toastify';
 
 const Checkout = () => {
   const [products, setProducts] = useState([]);
@@ -23,9 +24,30 @@ const Checkout = () => {
     }
   }, [user]);
 
+  const emptyCart = () => {
+    // Remove cart from local storage
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('cart');
+    }
+
+    // Remove cart from redux state
+    dispatch({
+      type: 'ADD_TO_CART',
+      payload: [],
+    });
+
+    // Remove cart form backend / database
+    emptyUserCart(user.token).then(res => {
+      setProducts([]);
+      setTotal(0);
+      toast.error('Cart is empty. Continue shopping');
+    });
+  };
+
   const saveAddressToDb = () => {
     //
   };
+
   return (
     <div className="container-fluid m-t-2">
       <div className="row">
@@ -60,7 +82,13 @@ const Checkout = () => {
               <button className="btn btn-primary">Place Order</button>
             </div>
             <div className="col-md-6">
-              <button className="btn btn-primary">Empty Cart</button>
+              <button
+                disabled={products.length === 0}
+                onClick={emptyCart}
+                className="btn btn-primary"
+              >
+                Empty Cart
+              </button>
             </div>
           </div>
         </div>
