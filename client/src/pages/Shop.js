@@ -67,6 +67,16 @@ const Shop = () => {
     });
   };
 
+  useEffect(() => {
+    setLoading(true);
+    loadAllProducts();
+    // fetch categories
+    getCategories().then(res => setCategories(res.data));
+
+    // fetch subcategories
+    getSubs().then(res => setSubs(res.data));
+  }, []);
+
   // 1. load products by default on page load
   const loadAllProducts = () => {
     getProductsByCount(12).then(p => setProducts(p.data));
@@ -84,8 +94,12 @@ const Shop = () => {
       setColor('');
       setShipping('');
     }
+
     const delayed = setTimeout(() => {
       fetchProducts({ query: text });
+      if (!text) {
+        loadAllProducts();
+      }
     }, 300);
     return () => clearTimeout(delayed);
   }, [text]);
@@ -318,16 +332,6 @@ const Shop = () => {
     setShipping(e.target.value);
     fetchProducts({ shipping: e.target.value });
   };
-
-  useEffect(() => {
-    setLoading(true);
-    loadAllProducts();
-    // fetch categories
-    getCategories().then(res => setCategories(res.data));
-
-    // fetch subcategories
-    getSubs().then(res => setSubs(res.data));
-  }, []);
 
   return (
     <div className="container-fluid">

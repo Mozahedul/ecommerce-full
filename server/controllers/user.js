@@ -23,11 +23,11 @@ module.exports.userCart = async (req, res) => {
     object.count = cart[i].count;
     object.color = cart[i].color;
 
-    const { price } = await Product.findById(cart[i]._id)
+    const productFromDb = await Product.findById(cart[i]._id)
       .select('price')
       .exec();
 
-    object.price = price;
+    object.price = productFromDb.price;
 
     products.push(object);
   }
@@ -61,6 +61,15 @@ module.exports.getUserCart = async (req, res) => {
 
 module.exports.emptyCart = async (req, res) => {
   const user = await User.findOne({ email: req.user.email }).exec();
-  const cart = await Cart.findOneAndDelete({ orderedBy: user._id }).exec();
+  const cart = await Cart.findOneAndRemove({ orderedBy: user._id }).exec();
   res.json(cart);
+};
+
+module.exports.saveAddress = async (req, res) => {
+  const userAddress = await User.findOneAndUpdate(
+    { email: req.user.email },
+    { address: req.body.address }
+  ).exec();
+
+  res.json({ ok: true });
 };
