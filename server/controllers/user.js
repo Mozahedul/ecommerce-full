@@ -3,7 +3,7 @@ const Product = require('../models/product');
 const Cart = require('../models/cart');
 
 module.exports.userCart = async (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   const { cart } = req.body;
   const products = [];
   const user = await User.findOne({ email: req.user.email }).exec();
@@ -45,6 +45,16 @@ module.exports.userCart = async (req, res) => {
     orderedBy: user._id,
   }).save();
 
-  console.log(newCart, 'new Cart');
+  console.log('Save new Cart ===> ', newCart);
   res.json({ ok: true });
+};
+
+module.exports.getUserCart = async (req, res) => {
+  const user = await User.findOne({ email: req.user.email }).exec();
+  const cart = await Cart.findOne({ orderedBy: user._id })
+    .populate('products.product', '_id, title, price, totalAfterDiscount')
+    .exec();
+
+  const { products, cartTotal, totalAfterDiscount } = cart;
+  res.json({ products, cartTotal, totalAfterDiscount });
 };
