@@ -11,11 +11,16 @@ const Checkout = () => {
   const { user } = useSelector(state => ({ ...state }));
 
   useEffect(() => {
-    getUserCart(user.token).then(res => {
-      console.log('User cart response ===> ', JSON.stringify(res.data));
-      setProducts(res.data.products);
-      setTotal(res.data.cartTotal);
-    });
+    if (user && user.token) {
+      getUserCart(user.token).then(res => {
+        console.log(
+          'User cart response ===> ',
+          JSON.stringify(res.data, null, 4)
+        );
+        setProducts(res.data.products);
+        setTotal(res.data.cartTotal);
+      });
+    }
   }, [user]);
 
   const saveAddressToDb = () => {
@@ -38,14 +43,18 @@ const Checkout = () => {
         </div>
         <div className="col-md-6">
           <h4>Order Summary</h4>
-          <h1>{total}</h1>
-          {JSON.stringify(products)}
           <hr />
-          <p>products</p>
+          <p>products ({products.length})</p>
           <hr />
-          <p>List of products</p>
+          {products.map((p, i) => (
+            <div key={i}>
+              {p.product.title} ({p.color}) x {p.count} = $
+              {p.product.price * p.count}
+            </div>
+          ))}
           <hr />
-          <p>Cart Total: 1x</p>
+
+          <p>Cart Total: ${total}</p>
           <div className="row">
             <div className="col-md-6">
               <button className="btn btn-primary">Place Order</button>
