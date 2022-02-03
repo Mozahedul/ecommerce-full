@@ -21,7 +21,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       // default: [],
     },
-    address: String,
+    address: { type: String },
     // wishlist: {
     //   type: objectId,
     //   ref: 'Product',
