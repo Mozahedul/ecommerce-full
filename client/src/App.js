@@ -32,6 +32,7 @@ import Shop from './pages/Shop';
 import Cart from './pages/Cart';
 import SideDrawer from './components/drawer/SideDrawer';
 import Checkout from './pages/Checkout';
+import CreateCouponPage from './pages/coupon/CreateCouponPage';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -94,6 +95,7 @@ const App = () => {
             path="/admin/dashboard"
             component={AdminDashboard}
           />
+          <AdminRoute exact path="/admin/coupon" component={CreateCouponPage} />
           <UserRoute exact path="/user/password" component={Password} />
           <UserRoute exact path="/user/wishlist" component={Wishlist} />
           <UserRoute exact path="/user/history" component={History} />
