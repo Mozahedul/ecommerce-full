@@ -3,7 +3,8 @@ const Coupon = require('../models/coupon');
 // Create, remove, list
 module.exports.create = async (req, res) => {
   try {
-    const { name, expiry, discount } = req.body;
+    // console.log(req.body);
+    const { name, expiry, discount } = req.body.coupon;
     const coupon = await new Coupon({ name, expiry, discount }).save();
     res.json(coupon);
   } catch (error) {
