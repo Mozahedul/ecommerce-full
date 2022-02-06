@@ -20,7 +20,7 @@ router.delete('/user/cart', authCheck, emptyCart);
 router.post('/user/address', authCheck, saveAddress);
 
 // coupon
-router.post('user/cart/coupon', authCheck, applyCouponToUserCart);
+router.post('/user/cart/coupon', authCheck, applyCouponToUserCart);
 // auth routes
 // router.get('/user', (req, res) => {
 //   res.json({
