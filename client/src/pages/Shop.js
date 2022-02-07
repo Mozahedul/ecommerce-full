@@ -449,15 +449,16 @@ const Shop = () => {
             <>
               <h4 className="text-danger">Products</h4>
               <div className="row">
-                {products.map(p => (
-                  <div
-                    key={p._id}
-                    className="col-md-4"
-                    style={{ marginBottom: '15px' }}
-                  >
-                    <ProductCard product={p} />
-                  </div>
-                ))}
+                {products &&
+                  products.map(p => (
+                    <div
+                      key={p._id}
+                      className="col-md-4"
+                      style={{ marginBottom: '15px' }}
+                    >
+                      <ProductCard product={p} />
+                    </div>
+                  ))}
               </div>
             </>
           )}

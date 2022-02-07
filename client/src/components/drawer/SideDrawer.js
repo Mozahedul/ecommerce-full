@@ -26,8 +26,9 @@ const SideDrawer = () => {
       }}
       visible={drawer}
     >
-      {cart.map(p => (
+      {cart.map((p, i) => (
         <Card
+          key={i}
           className="m-b-2"
           cover={
             p.images[0] ? (
