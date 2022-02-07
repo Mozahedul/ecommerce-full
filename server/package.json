@@ -2,7 +2,7 @@
   "name": "server",
   "proxy": "http://127.0.0.1:8000",
   "version": "1.0.0",
-  "engines":{
+  "engines": {
     "node": ">=16.13.1"
   },
   "description": "",
@@ -24,6 +24,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.1.3",
     "morgan": "^1.10.0",
-    "slugify": "^1.6.4"
+    "slugify": "^1.6.4",
+    "stripe": "^8.202.0"
   }
 }
