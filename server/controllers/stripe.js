@@ -14,3 +14,4 @@ module.exports.createPaymentIntent = async (req, res) => {
     clientSecret: paymentIntent.client_secret,
   });
 };
+ 
