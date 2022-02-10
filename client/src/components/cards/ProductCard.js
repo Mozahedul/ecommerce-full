@@ -1,5 +1,5 @@
 import { EyeOutlined, ShoppingCartOutlined } from '@ant-design/icons';
-import { Card, Tooltip } from 'antd';
+import { Button, Card, Tooltip } from 'antd';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -13,7 +13,7 @@ const ProductCard = ({ product }) => {
   const [tooltip, setTooltip] = useState('Click to add');
   const dispatch = useDispatch();
   // Destructure the product object
-  const { images, title, description, slug, price } = product;
+  const { images, title, description, slug, price, quantity } = product;
 
   // const { user, cart } = useSelector(state => ({ ...state }));
 
@@ -47,15 +47,19 @@ const ProductCard = ({ product }) => {
           />
         }
         actions={[
-          <Link to={`/product/${slug}`}>
+          <Link to={`/product/${slug}`} style={{ textDecoration: 'none' }}>
             <EyeOutlined className="text-warning" />
             <br /> View Product
           </Link>,
           <Tooltip title={tooltip}>
-            <div onClick={handleAddToCart}>
+            <Button
+              type="text"
+              onClick={handleAddToCart}
+              disabled={quantity < 1}
+            >
               <ShoppingCartOutlined className="text-danger" />
-              <br /> Add to Cart
-            </div>
+              <br /> {quantity < 1 ? 'Out of stock' : 'Add to Cart'}
+            </Button>
           </Tooltip>,
         ]}
       >
