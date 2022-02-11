@@ -10,9 +10,9 @@ const NewArrivals = () => {
   const [productsCount, setProductsCount] = useState(0);
   const [page, setPage] = useState(1);
 
-  console.log(productsCount, page);
+  // console.log(productsCount, page);
 
-  console.log(Math.ceil((productsCount / 3) * productsCount));
+  // console.log(Math.ceil((productsCount / 3) * productsCount));
 
   useEffect(() => {
     loadAllProducts();
@@ -32,7 +32,7 @@ const NewArrivals = () => {
 
   return (
     <>
-      {productsCount}
+      {/* {productsCount} */}
       <div className="container">
         {loading ? (
           <LoadingCard count={3} />
