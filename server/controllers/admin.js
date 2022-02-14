@@ -3,15 +3,16 @@ const Order = require('../models/order');
 
 // orders, orderStatus
 module.exports.orders = async (req, res) => {
-  const orders = await Order.find({})
+  const allOrders = await Order.find({})
     .sort('-createdAt')
     .populate('products.product')
     .exec();
 
-  res.json(orders);
+  res.json(allOrders);
 };
 
-module.exports = async (req, res) => {
+module.exports.orderStatus = async (req, res) => {
+  console.log('From admin controller ===> ', req.body);
   const { orderId, orderStatus } = req.body;
 
   const updated = await Order.findByIdAndUpdate(
