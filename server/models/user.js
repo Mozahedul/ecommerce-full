@@ -22,10 +22,10 @@ const userSchema = new mongoose.Schema(
       // default: [],
     },
     address: { type: String },
-    // wishlist: {
-    //   type: objectId,
-    //   ref: 'Product',
-    // },
+    wishlist: {
+      type: objectId,
+      ref: 'Product',
+    },
   },
   { timestamps: true }
 );

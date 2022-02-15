@@ -155,3 +155,40 @@ module.exports.orders = async (req, res) => {
 
   res.json(userOrders);
 };
+
+// Add products to wishlisht
+module.exports.addToWishlist = async (req, res) => {
+  const { productId } = req.body;
+
+  const user = await User.findOneAndUpdate(
+    { email: req.user.email },
+    { $addToSet: { wishlist: productId } }
+  ).exec();
+
+  // $addToSet is a method used to avoid duplicate entry
+
+  res.json({ ok: true });
+};
+
+// View or show wishlist products
+module.exports.wishlist = async (req, res) => {
+  const list = await User.findOne({ email: req.user.email })
+    .select('wishlist')
+    .populate('wishlist')
+    .exec();
+
+  res.json(list);
+};
+
+// Remove products from wishlist
+module.exports.removeFromWishlist = async (req, res) => {
+  const { productId } = req.params;
+
+  const user = await User.findOneAndUpdate(
+    { email: req.user.email },
+    { $pull: { wishlist: productId } }
+  ).exec();
+
+  // $pull is a method used to remove item from database collection
+  res.json({ ok: true });
+};
