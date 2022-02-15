@@ -156,7 +156,7 @@ module.exports.orders = async (req, res) => {
   res.json(userOrders);
 };
 
-// Add products to wishlisht
+// Add products to wishlist
 module.exports.addToWishlist = async (req, res) => {
   const { productId } = req.body;
 

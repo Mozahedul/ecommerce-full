@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const { objectId } = mongoose.Schema;
+const { ObjectId } = mongoose.Schema;
 
 const userSchema = new mongoose.Schema(
   {
@@ -23,7 +23,7 @@ const userSchema = new mongoose.Schema(
     },
     address: { type: String },
     wishlist: {
-      type: objectId,
+      type: ObjectId,
       ref: 'Product',
     },
   },
