@@ -25,6 +25,7 @@
     "mongoose": "^6.1.3",
     "morgan": "^1.10.0",
     "slugify": "^1.6.4",
-    "stripe": "^8.202.0"
+    "stripe": "^8.202.0",
+    "uniqueid": "^1.0.0"
   }
 }

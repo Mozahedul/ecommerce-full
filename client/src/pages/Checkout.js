@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   applyCoupon,
+  createCashOrderForUser,
   emptyUserCart,
   getUserCart,
   saveUserAddress,
@@ -22,7 +23,7 @@ const Checkout = ({ history }) => {
   const [discountError, setDiscountError] = useState('');
 
   const dispatch = useDispatch();
-  const { user } = useSelector(state => ({ ...state }));
+  const { user, COD } = useSelector(state => ({ ...state }));
 
   useEffect(() => {
     if (user && user.token) {
@@ -132,6 +133,13 @@ const Checkout = ({ history }) => {
     </>
   );
 
+  const createCashOrder = () => {
+    createCashOrderForUser(user.token, COD).then(res => {
+      console.log('EMPTY CART ORDER CREATED RES ==> ', res);
+      // empty cart from redux, local storage, reset coupon, reset COD, redirect
+    });
+  };
+
   return (
     <div className="container-fluid m-t-2">
       <div className="row">
@@ -165,13 +173,23 @@ const Checkout = ({ history }) => {
           )}
           <div className="row">
             <div className="col-md-6">
-              <button
-                className="btn btn-primary"
-                disabled={!addressSaved || !products.length}
-                onClick={() => history.push('/payment')}
-              >
-                Place Order
-              </button>
+              {COD ? (
+                <button
+                  className="btn btn-primary"
+                  disabled={!addressSaved || !products.length}
+                  onClick={createCashOrder}
+                >
+                  Place Order with COD
+                </button>
+              ) : (
+                <button
+                  className="btn btn-primary"
+                  disabled={!addressSaved || !products.length}
+                  onClick={() => history.push('/payment')}
+                >
+                  Place Order
+                </button>
+              )}
             </div>
             <div className="col-md-6">
               <button

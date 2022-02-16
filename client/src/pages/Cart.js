@@ -16,6 +16,10 @@ const Cart = ({ history }) => {
     );
 
   const saveOrderToDb = () => {
+    dispatch({
+      type: 'COD',
+      payload: false,
+    });
     userCart(cart, user.token)
       .then(res => {
         console.log('CART POST RESPONSE ==> ', res);

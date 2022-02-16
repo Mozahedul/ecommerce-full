@@ -1,3 +1,4 @@
+const uniqueid = require('uniqueid');
 const User = require('../models/user');
 const Product = require('../models/product');
 const Cart = require('../models/cart');
@@ -190,5 +191,45 @@ module.exports.removeFromWishlist = async (req, res) => {
   ).exec();
 
   // $pull is a method used to remove item from database collection
+  res.json({ ok: true });
+};
+
+// cash on delivery
+module.exports.createCashOrder = async (req, res) => {
+  const { COD } = req.body;
+
+  // If COD is true, create order with status of Cash on Delivery.
+  if (!COD) return res.status(400).send('Create cash order failed');
+
+  const user = await User.findOne({ email: req.user.email }).exec();
+  const userCart = await Cart.findOne({ orderedBy: user._id }).exec();
+
+  const newOrder = await new Order({
+    products: userCart.products,
+    paymentIntent: {
+      id: uniqueid(),
+      amount: userCart.cartTotal,
+      currency: 'usd',
+      status: 'Cash on Delivery',
+      created: Date.now(),
+      payment_method_types: ['cash'],
+    },
+    orderedBy: user._id,
+  }).save();
+
+  // decrement quantity, increment sold
+  const bulkOption = userCart.products.map(item => {
+    return {
+      updateOne: {
+        filter: { _id: item.product._id },
+        update: { $inc: { quantity: -item.count, sold: +item.count } },
+      },
+    };
+  });
+
+  const updated = await Product.bulkWrite(bulkOption, {});
+  console.log('PRODUCT QUANTITY--, AND SOLD++ ==> ', updated);
+
+  console.log(newOrder);
   res.json({ ok: true });
 };
