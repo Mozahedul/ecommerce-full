@@ -1,16 +1,19 @@
 import { HeartOutlined, ShoppingCartOutlined } from '@ant-design/icons';
-import { Card, Tabs, Tooltip } from 'antd';
+import { Button, Card, Tabs, Tooltip } from 'antd';
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { Link } from 'react-router-dom';
 import StarRatings from 'react-star-ratings';
+import { toast } from 'react-toastify';
 import { addToCart } from '../../functions/addToCart';
 import { showAverage } from '../../functions/rating';
+import { addToWishlist } from '../../functions/user';
 import Laptop from '../../images/laptop.jpg';
 import RatingModal from '../modal/RatingModal';
 import ProductListItems from './ProductListItems';
+import { useHistory } from 'react-router-dom';
 
 const { TabPane } = Tabs;
 
@@ -20,10 +23,23 @@ const SingleProduct = ({ product, onStarClick, star }) => {
   const [tooltip, setTooltip] = useState('Click to add');
   // redux
   const dispatch = useDispatch();
+  const history = useHistory();
+
+  const { user } = useSelector(state => ({ ...state }));
 
   const handleAddToCart = () => {
     addToCart(product, setTooltip, dispatch);
   };
+
+  const handleAddToWishlist = e => {
+    e.preventDefault();
+    addToWishlist(product._id, user.token).then(res => {
+      console.log('ADDED TO WISHLIST => ', res.data);
+      toast.success('Added to wishlist');
+      history.push('/user/wishlist');
+    });
+  };
+
   return (
     <>
       <div className="col-md-7">
@@ -75,10 +91,10 @@ const SingleProduct = ({ product, onStarClick, star }) => {
                 Add to Cart
               </div>
             </Tooltip>,
-            <Link to="/">
+            <Button type="text" onClick={handleAddToWishlist}>
               <HeartOutlined className="text-info" /> <br />
               Add to Wishlist
-            </Link>,
+            </Button>,
             <RatingModal>
               {/* <StarRating is the children component of <RatingModal/> */}
               <StarRatings
