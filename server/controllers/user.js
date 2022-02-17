@@ -196,7 +196,7 @@ module.exports.removeFromWishlist = async (req, res) => {
 
 // cash on delivery
 module.exports.createCashOrder = async (req, res) => {
-  const { COD } = req.body;
+  const { COD, couponApplied } = req.body;
 
   // If COD is true, create order with status of Cash on Delivery.
   if (!COD) return res.status(400).send('Create cash order failed');
@@ -204,17 +204,26 @@ module.exports.createCashOrder = async (req, res) => {
   const user = await User.findOne({ email: req.user.email }).exec();
   const userCart = await Cart.findOne({ orderedBy: user._id }).exec();
 
+  let finalAmount = 0;
+
+  if (couponApplied && userCart.totalAfterDiscount) {
+    finalAmount = userCart.totalAfterDiscount * 100;
+  } else {
+    finalAmount = userCart.CartTotal * 100;
+  }
+
   const newOrder = await new Order({
     products: userCart.products,
     paymentIntent: {
       id: uniqueid(),
-      amount: userCart.cartTotal,
+      amount: finalAmount,
       currency: 'usd',
-      status: 'Cash on Delivery',
+      status: 'Cash On Delivery',
       created: Date.now(),
       payment_method_types: ['cash'],
     },
     orderedBy: user._id,
+    orderStatus: 'Cash On Delivery',
   }).save();
 
   // decrement quantity, increment sold
